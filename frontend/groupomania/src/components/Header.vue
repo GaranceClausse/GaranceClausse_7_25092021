@@ -1,0 +1,65 @@
+<template>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container navbar__container p-4">
+        <router-link to="/homepage" class="navbar-brand"><img src="../assets/white-logo.png" alt="logo groupomania" height="60" width="220" class="logo" /></router-link>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item"><router-link class="active nav-link" to="/homepage">Fil d'actualité</router-link></li>
+            <li class="nav-item"><router-link class="active nav-link" to="/login">Se connecter</router-link></li>
+            <li class="nav-item"><router-link class="active nav-link" to="/profil">Profil</router-link></li>
+            <li class="nav-item" @click="emitLogout"><router-link class="active nav-link" to="/">Se déconnecter</router-link></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</template>
+
+
+<script>
+export default {
+  name: "Header",
+  methods: {
+    emitLogoutEvent() {
+      this.$emit("logout-click");
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+
+.navbar {
+  height:75px;
+  flex-wrap: nowrap;
+  background-color: #D1515A;
+  border-bottom: solid 2px #091f43;
+
+  &-collapse{
+    justify-content: end;
+  }
+}
+
+
+.nav-link {
+  font-size: 15px;
+  font-weight: bold;
+  color: #091f43;
+
+  &:hover {
+    color: #d1515a;
+  }
+
+}
+
+.logo {
+  @media (max-width: 375px) {
+    width: 120px;
+    height: 35px;
+  }
+}
+
+</style>
