@@ -4,6 +4,10 @@ const postRoutes = require('./routes/postRoutes');
 const userRoutes = require('./routes/userRoutes');
 const replyRoutes = require('./routes/replyRoutes');
 
+require('jquery');
+require('bootstrap');
+require('bootstrap-loader');
+
 const app = express();
 const limiter = rateLimit({
     max     : 120,

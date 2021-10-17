@@ -2,9 +2,9 @@
   <div class="container col-8">
     <div class="row">
       <div class="card">
-        <h1 class="card_title" v-if= "mode == 'login'">Connexion</h1>
+        <h1 class="card_title" v-if="mode === 'login'">Connexion</h1>
         <h1 class="card_title" v-else>Inscription</h1>
-        <p class="card_subtitle" v-if= "mode == 'login'">
+        <p class="card_subtitle" v-if="mode === 'login'">
           Pas encore de compte?
           <button class="card_action" @click="switchToCreateAccount()">Créer un compte</button>
         </p>
@@ -20,8 +20,10 @@
             placeholder="Adresse mail"
           />
         </div>
-        <div class="form-row" v-if="mode == 'create'">
-          <input v-model="name" class="form_row_input col-12" type="text" placeholder="name" />
+        <div class="form-row" v-if="mode === 'create'">
+          <input v-model="name" class="form_row_input col-12" type="text" placeholder="Nom" />
+        </div>
+          <div class="form-row" v-if="mode === 'create'">
           <input
             v-model="pseudo"
             class="form_row_input col-12"
@@ -38,10 +40,10 @@
           />
         </div>
         <div class="form_row">
-          <button class="button button--disabled" v-if="mode == 'login'">
+          <button class="button button--disabled" v-if="mode === 'login'">
             Connexion
           </button>
-          <button v-on:click="createAccount()" class="button" :class="{ 'button--disabled': !validatedFields() }" v-else>
+          <button v-on:click="createAccount()" class="button" v-else>
             Créer mon compte
           </button>
         </div>
@@ -65,7 +67,7 @@ export default {
   computed: {
     validatedFields() {
       if (this.mode == "create") {
-        if (this.email != "" && this.name != "" && this.pseudo != "" && this.psw != "") {
+        if ((this.email != "") && (this.name != "") && (this.pseudo != "") && (this.psw != "")) {
           return true;
         } else {
           return false;
@@ -87,12 +89,13 @@ export default {
       this.mode="login";
     },
     createAccount() {
-      this.$store.dispatch("createAccount", {
-        email: this.email,
-        name: this.name,
-        pseudo: this.pseudo,
-        pwd: this.pwd,
-      });
+      console.log("Bravo, tu as créé le login " + this.email + " avec le mdp " + this.psw);
+      // this.$store.dispatch("createAccount", {
+      //   email: this.email,
+      //   name: this.name,
+      //   pseudo: this.pseudo,
+      //   pwd: this.pwd,
+      // });
     },
   },
 };
