@@ -1,31 +1,39 @@
-const Reply = require('../models/replyModel.js');
+const Reply = require('../models/replyModel');
 
-exports.getRepliesCtrl = async (req, res, next) => {
-    try {
-        const replies = await Reply.getReplies(req.params.id_post);
-        if (!replies) {
-            throw({status:400, msg:"Erreur de récupération des commentaires"})
-        };
-        for (let reply of replies) {
-            const author = JSON.stringify(await Reply.getMatchingUser(reply.id_user));
-            const length = author.length;
-            reply.author = author.substr(12, (length - 15))
-        }
-        res.status(200).json({replies});
-        }
-    catch(err) {
-        res.status(err.status).json({ error: err.msg })
-    }
-}
-
+//controlleur pour la creation d'un nouveau commentaire
 exports.createReplyCtrl = (req, res, next) => {
-    Reply.createReply(req.body.id_user, req.body.id_post, req.body.content)
-        .then(() => res.status(201).json({ message: 'Commentaire publié !'}))
-        .catch(error => res.status(400).json({ error }))
-}
+  const reply = Reply.build({ // creation du nouvel objet sauce grace au model pré-établie
+    commentaire: req.body.commentaire,  // recuperation du commentaire
+    prenom: req.body.prenom,
+    UserId: req.body.UserId,
+    ArticleId: req.body.ArticleId
+  });
+  reply.save() // sauvegarde dans la bdd
+    .then(() => res.status(201).json({ message: 'commentaire créé !'}))
+    .catch(error => res.status(400).json({ error }));
+};
 
+// controlleur qui renvoi tous les commentaires de la bdd du plus recent au plus ancien
+exports.getRepliesCtrl = (req, res, next) => {
+    Reply.findAll({
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        where: {
+            ArticleId: req.params.id
+        }
+    })
+      .then(replies => res.status(200).json(replies))
+      .catch(error => res.status(500).json({ error }));
+};
+
+// controlleur qui supprime un commentaire de la bdd
 exports.deleteReplyCtrl = (req, res, next) => {
-    Reply.deleteReply(req.params.id, req.body.id_user)
-        .then(() => res.status(201).json({ message: 'Commentaire supprimé !'}))
-        .catch(error => res.status(404).json({ error: "Ce commentaire non trouvé" }))
-}
+    Reply.findByPk(req.params.id) //trouve le commentaire en question dans la bdd par son id
+    .then(reply => {
+        reply.destroy() // supprime le commentaire trouvé
+          .then(() => res.status(200).json({ message: 'commentaire supprimé !'}))
+          .catch(error => res.status(400).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error }));
+};

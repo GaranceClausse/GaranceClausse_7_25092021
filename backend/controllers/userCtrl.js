@@ -5,64 +5,93 @@ const validator = require("validator");
 
 
 
-exports.signupCtrl = async (req, res, next) => {
-  try {
-    const validEmail = await validator.isEmail(req.body.email);
-    if (!validEmail) {
-      throw({ status: 401, msg:"Adresse mail non valide."})
-    }
-    const hash = await bcrypt.hash(req.body.password, 10);
-    await User.signup(req.body.name, hash, req.body.email, 0);
-    res.status(201).json({ message: "Utilisateur créé !" })
-  } catch(err) {
-    res.status(err.status).json({ error: err.msg })
-  }
-}
+exports.signupCtrl =  (req, res, next) => {
+  bcrypt.hash(req.body.password, 10) // cryptage du mdp
+      .then(hash => {
+        const user = User.build({
+            nom: req.body.nom,
+            email: req.body.email,
+            password: hash
+        });
+        user.save() // sauvegarde les informations utilisateur
+          .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+          .catch(error => res.status(400).json({ error }));
+      })
+      .catch(error => res.status(500).json({ error }));
+};
 
-exports.signupAdminCtrl = async (req, res, next) => {
-  try {
-    const validEmail = await validator.isEmail(req.body.email);
-    if (!validEmail) {
-      throw({ status: 401, msg:"Adresse mail non valide."})
-    }
-    const hash = await bcrypt.hash(req.body.password, 10);
-    await User.signup(req.body.name, hash, req.body.email, 1);
-    res.status(201).json({ message: "Administrateur créé !" })
-  } catch(err) {
-    res.status(err.status).json({ error: err.msg })
-  }
-}
+// controlleur de connexion des utilisateurs
+exports.loginCtrl = (req, res, next) => {
+  User.findOne({ where: {email: req.body.email} }) //verifie si l'email est valide
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({ error: 'Utilisateur non trouvé !' });
+      }
+      bcrypt.compare(req.body.password, user.password) // verifie si le mdp est valide
+        .then(valid => {
+          if (!valid) {
+            return res.status(401).json({ error: 'Mot de passe incorrect !' });
+          }
+          res.status(200).json({
+            userId: user.id,
+            nom: user.nom,
+            prenom: user.prenom,
+            isAdmin: user.isAdmin,
+            token: jwt.sign(
+              { userId: user.id },
+              process.env.RND_TKN, // creation token de connexion
+              { expiresIn: '24h' }
+            )
+          });
+        })
+        .catch(error => res.status(401).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error }));
+};
 
-exports.loginCtrl = async (req, res, next) => {
-  try {
-      if (req.body.name == null || req.body.password == null) {
-        throw({status:401, msg:"Utilisateur ou mot de passe non renseigné."})
-      }
-      const user = await User.login(req.body.name, req.body.password);
-      if (! await bcrypt.compare(req.body.password, user.password)){
-          throw({status:401, msg:"Mot de passe erroné !"});
-      }
+// controlleur get one user
+exports.getOneUserCtrl = (req, res, next) => {
+  if(req.params.id == 0) {
+    const token = req.headers.authorization.split(' ')[1]; //recuperation du token
+    const decodedToken = jwt.verify(token, process.env.RND_TKN); // decodage du token grace a la clé 
+    const id = decodedToken.userId;
+    User.findByPk(id)
+    .then(user => {
       res.status(200).json({
-        name: user.name,
-        id_user: user.id,
-        role: user.role,
-        token: jwt.sign(
-          {id_user: user.id},
-          {role: user.role},
-          `${process.env.RND_TKN}`, 
-          {expiresIn: "24h"}
-         )
+          userId: user.id,
+          nom: user.nom,
+          prenom: user.prenom,
+          isAdmin: user.isAdmin,
       });
-  }
-  catch(err){
-      res.status(err.status).json({ error: err.msg });
+    })
+    .catch(error => res.status(500).json({ error }));
+  } else {
+    User.findByPk(req.params.id)
+    .then(user => {
+      res.status(200).json({
+          nomExt: user.nom,
+          prenomExt: user.prenom,
+          isAdminExt: user.isAdmin,
+      });
+    })
+    .catch(error => res.status(500).json({ error }));
   }
 };
 
+// controlleur pour suppression profil
 exports.deleteUserCtrl = (req, res, next) => {
-  User.deleteUser(req.body.id)
-    .then(() =>
-      res.status(201).json({ message: "Votre compte a été supprimé." })
-    )
-    .catch(() => res.status(404).json({ error: "Compte utilisateur non trouvé" }));
+  User.findByPk(req.params.id)
+  .then(user => {
+    bcrypt.compare(req.body.password, user.password) // verifie si le mdp est valide
+      .then(valid => {
+        if (!valid) {
+          return res.status(401).json({ error: 'Mot de passe incorrect !' });
+        }
+        user.destroy()
+          .then(() => res.status(200).json({ message: 'Utilisateur supprimé !' }))
+          .catch(error => res.status(400).json({ error }));
+      })
+      .catch(error => res.status(401).json({ error }));
+  })
+  .catch(error => res.status(500).json({ error }));
 };
