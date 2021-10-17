@@ -56,6 +56,14 @@ const store = createStore({
                 });
             })
         },
+        
+     /*   showProfile: ({commit}) => {
+            instance.get('api/auth/:id')
+                .then(function (res) {
+                  commit('userInfos', res.data.result[0]);
+                })
+                .catch(err => console.log(err.message))
+          },*/
     }
 })
 

@@ -1,59 +1,142 @@
 <template>
-    <div class="container col-8">
-    <div class="row">
+  <div class="profil container">
+    <section class="wrapper wrapper__sm">
       <div class="card">
-        <h1 class="card_title">Votre profil</h1>
-        <div class="form-row ">
-          Pseudo : <span class="info"> {{ pseudo }} </span>
-        </div>
-        <div class="form-row">
-          Nom : <span class="info"> {{ name }} </span>
-        </div>
-        <div class="form-row">
-          E-mail : <span class="info"> {{ email }}</span>
-        </div>
-        <div class="form-row">
-          Mot de passe : <span class="info">{{ psw }}</span>
-        </div>
-        <div class="form_row">
-          <button class="button button--disabled">
-           Modifier mon profil
-          </button>
-          
+        <h2 class="card__title">Mon profil</h2>
+        <div class="form">
+          <div class="user">
+            <div v-if="mode !== 'modify'" class="inputfield py-3">
+              <label for="username">Utilisateur :</label>
+              <input type="text" id="username" name="username" disabled />
+            </div>
+            <div v-if="mode !== 'modify'" class="inputfield py-3">
+              <label for="email">Adresse email :</label>
+              <input type="email" id="email" name="email" disabled />
+            </div>
+            <div v-if="mode === 'modify'" class="inputfield py-3">
+              <label for="psw">Mot de passe :</label>
+              <input
+                v-model="psw"
+                type="psw"
+                id="psw"
+                name="psw"
+                maxlength="255"
+                :required="mode === 'modify'"
+                :disabled="mode !== 'modify'"
+              />
+            </div>
+            <div v-if="mode === 'modify'" class="inputfield">
+              <label for="confirm">Confirmation :</label>
+              <input
+                v-model="confirm"
+                type="psw"
+                id="confirm"
+                maxlength="255"
+                :required="mode === 'modify'"
+                :disabled="mode !== 'modify'"
+              />
+            </div>
+          </div>
+          <div class="card__option">
+            <h4 v-if="mode === 'read'">Gérer mon compte :</h4>
+            <button
+              v-if="mode === 'read'"
+              role="button"
+              class="card_action"
+              @click="setModify"
+            >
+              Modifier mes informations
+            </button>
+            <button role="button" class="card_action" @click="setDelete">
+              Supprimer mon compte
+            </button>
+
+            <button
+              v-if="mode === 'modify' || mode === 'delete'"
+              role="button"
+              class="card_action"
+              @click="setRead"
+            >
+              Annuler
+            </button>
+          </div>
+          <div class="inputfield">
+            <button
+              v-if="mode === 'read'"
+              @click="logout()"
+              class="btn btn__lg btn__danger"
+            >
+              Déconnexion
+            </button>
+            <button
+              v-if="mode === 'modify'"
+              @click="setRead()"
+              type="submit"
+              class="btn btn__lg btn__success"
+              :disabled="!validatedFields"
+            >
+              Enregistrer
+            </button>
+            <button v-if="mode === 'delete'" class="btn btn__lg btn__danger">
+              Supprimer
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-    name: 'ProfilDisplay',
-    data () {
+  name: "Profilmode",
+  data() {
     return {
-      email: "kvgurie",
-      name: "ljkghj",
-      pseudo: "ljkh",
-      psw: "mlihukg",
+      mode: "read",
+      username: "",
+      email: "",
+      psw: "",
+      confirm: "",
     };
   },
-}
+  computed: {
+    validatedFields: function () {
+      return this.psw !== "" && this.psw === this.confirm;
+    },
+    ...mapState({
+      user: "userInfos",
+    }),
+  },
+  mounted() {
+    console.log(this.$store.state.user);
+    if (this.$store.state.user.userId === -1) {
+      this.$router.push("/");
+      return;
+    }
+    this.$store.dispatch("showProfile");
+  },
+  methods: {
+    logout() {
+      this.$store.commit("logout");
+      this.$router.push("/");
+    },
+    setRead() {
+      this.mode = "read";
+    },
+    setModify() {
+      this.mode = "modify";
+    },
+    setDelete() {
+      this.mode = "delete";
+    },
+  },
+};
 </script>
 
-<style scoped>
-.form-row {
-  display: flex;
-  margin: 10px auto;
-  flex-wrap: wrap;
-  font-weight: bold;
-}
-
-.info {
-    font-weight: 400;
-}
-
-.button {
-  font-family: 'Roboto', sans-serif;
+<style scoped lang="scss">
+.btn {
+  font-family: "Roboto", sans-serif;
   font-size: 15px;
   outline: 0;
   border: 0;
@@ -61,37 +144,48 @@ export default {
   width: 100%;
   padding: 15px;
   margin: 10px auto;
-  background: #D1515A;
-  color: #FAFAFA;
+  background: #d1515a;
+  color: #fafafa;
   text-transform: uppercase;
 }
 
-.container{
-  padding: 8% 0 0;
-  width: 365px;
-  margin: auto;
+.profil {
+  padding: 0;
+  margin: 0 auto;
+  
 }
 
-.card{
+.user__info {
+  padding: 25px auto;
+}
+
+.card {
   position: relative;
   z-index: 1;
-  max-width: 450px;
-  margin: 0 auto 100px;
+  width: 550px;
+  height: 100%;
+  margin: 0 auto;
   padding: 45px;
   border-radius: 12px;
-  background-color:#f2f2f2;
+  background-color: #f2f2f2;
   opacity: 0.85;
-}
 
-.card_action {
+  &__title {
+    padding-bottom: 45px;
+  }
+
+  &__option {
+    padding-top: 95px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_action {
     text-decoration: underline;
     border: none;
-    background-color: #FAFAFA;
-
+    &:hover {
+      color: #d1515a;
+    }
+  }
 }
-
-.card_title {
-    font-size: 25px;
-}
-
 </style>
