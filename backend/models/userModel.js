@@ -14,7 +14,7 @@ const User = sequelize.define('User', {
         primaryKey: true,
         autoIncrement: true
     },
-    name: {
+    nom: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -26,7 +26,7 @@ const User = sequelize.define('User', {
             isEmail: true
         }
     },
-    psw: {
+    password: {
         type: DataTypes.STRING,
         allowNull: false,
     },

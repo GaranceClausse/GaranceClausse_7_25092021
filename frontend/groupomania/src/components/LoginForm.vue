@@ -72,12 +72,6 @@ export default {
       validated: false,
     };
   },
-  mounted: function () {
-    if (this.$store.state.user.userId != 0) {
-      this.$router.push("/homepage");
-      return;
-    }
-  },
   computed: {
     validatedFields() {
       if (this.mode == "create") {
@@ -105,6 +99,7 @@ export default {
     createAccount() {
       this.$store
         .dispatch("createAccount", {
+
           nom: this.username,
           email: this.email,
           password: this.psw,
@@ -119,6 +114,7 @@ export default {
     userLogin: function () {
       this.$store
         .dispatch("userLogin", {
+          nom: this.username,
           email: this.email,
           password: this.psw,
         })
