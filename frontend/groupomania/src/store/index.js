@@ -7,7 +7,7 @@ const instance = axios.create({
 });
 
 let token = JSON.parse(localStorage.getItem('token'));
-if(token) {
+if (token) {
     instance.defaults.headers.common['Authorization'] = token; // on applique les auth au header avec le bearer token
 }
 
@@ -18,16 +18,15 @@ if (!user) {
         token: ''
     };
 } else {
-    try 
-    {
+    try {
         user = JSON.parse(user);
-    instance.defaults.headers.common['Authorization'] = user.token;
-} catch (ex) {
-    user = {
-        userId: -1,
-        token: ''
-    };
-}
+        instance.defaults.headers.common['Authorization'] = user.token;
+    } catch (ex) {
+        user = {
+            userId: -1,
+            token: ''
+        };
+    }
 }
 const store = createStore({
     state: {
@@ -39,6 +38,7 @@ const store = createStore({
             photo: '',
             isAdmin: false,
         },
+        posts: [],
     },
     mutations: {
         setStatus: function (state, status) {
@@ -58,55 +58,86 @@ const store = createStore({
                 token: ''
             }
             localStorage.removeItem('user');
+        },
+        setPost: function(state, posts) {
+            state.posts = posts;
         }
     },
     getters: {
         formattedHeaders: state => {
-          return { 'Accept': 'application/json',
-          'Content-Type': 'application/json', 
-          "authorization" : "bearer "+ state.user.token
+            return {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "authorization": "bearer " + state.user.token
+            }
         }
-        }
-      },
+    },
     actions: {
-        createAccount : ({commit}, userInfos) => {
+        createAccount: ({ commit }, userInfos) => {
             commit('setStatus', 'loading');
             return new Promise((resolve, reject) => {
                 instance.post('/auth/signup', userInfos)
-                .then(function (res) {
-                    commit('setStatus', 'created');
-                    resolve(res);
-                })
-                .catch(function (error) {
-                    commit('setStatus', 'error_create');
-                    reject(error);
-                });
+                    .then(function (res) {
+                        commit('setStatus', 'created');
+                        resolve(res);
+                    })
+                    .catch(function (error) {
+                        commit('setStatus', 'error_create');
+                        reject(error);
+                    });
             })
         },
         // requete post user login
-        userLogin: ({commit}, userInfos) => {
+        userLogin: ({ commit }, userInfos) => {
             commit('setStatus', 'loading');
             return new Promise((resolve, reject) => {
                 instance.post('/auth/login', userInfos)
+                    .then(function (res) {
+                        commit('setStatus', '');
+                        commit('logUser', res.data);
+                        resolve(res);
+                    })
+                    .catch(function (error) {
+                        commit('setStatus', 'error_login');
+                        reject(error);
+                    });
+            })
+        },
+
+      /*  getUserInfos: ({ commit }) => {
+            instance.get(`/auth/${userInfos.id}`)
                 .then(function (res) {
-                    commit('setStatus', '');
-                    commit('logUser', res.data);
+                    commit('userInfos', res.data.userInfos);
+                })
+                .catch(err => console.log(err.message))
+        },*/
+
+        postCreate: ({ commit }, postInfos) => {
+            console.log(postInfos);
+            return new Promise((resolve, reject) => {
+                commit;
+                instance.post('/post', postInfos)
+                    .then(function (res) {
+                        resolve(res);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+            })
+        },
+        postGetAll: ({commit}) => {
+            return new Promise((resolve, reject) => {
+                commit;
+                instance.get('/post')
+                .then(function (res) {
+                    commit('setPost', res.data)
                     resolve(res);
                 })
                 .catch(function (error) {
-                    commit('setStatus', 'error_login');
                     reject(error);
                 });
             })
         },
-        
-        getUserInfos: ({commit}) => {
-            instance.get('/infos')
-                .then(function (res) {
-                  commit('userInfos', res.data.userInfos);
-                })
-                .catch(err => console.log(err.message))
-          },
     }
 })
 

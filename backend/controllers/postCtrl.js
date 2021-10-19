@@ -63,12 +63,12 @@ exports.getAllPostsCtrl = (req, res, next) => {
       .then(posts => res.status(200).json(posts))
       .catch(error => res.status(500).json({ error }));
 };
-
+/*
 exports.getOnePostCtrl = (req, res, next) => {
     Post.findByPk(req.params.id)
       .then(post => res.status(200).json(post))
       .catch(error => res.status(500).json({ error }));
-};
+};*/
 
 // controlleur qui supprime un article de la bdd
 exports.deletePostCtrl = (req, res, next) => {

@@ -13,10 +13,9 @@ const router      = require('express').Router();
  * 200:
  * description:
  */
-router.post('/', auth, postCtrl.createPostCtrl);
+router.post('/post', auth, multer, postCtrl.createPostCtrl);
 router.post('/:id/like', postCtrl.likePostCtrl)
-router.get('/from/:id/:quantity', auth, postCtrl.getAllPostsCtrl);
-router.get('/:id', auth, postCtrl.getOnePostCtrl);
+router.get('/post', auth, postCtrl.getAllPostsCtrl);
 router.delete('/:id', auth, postCtrl.deletePostCtrl);
 
 module.exports = router;
