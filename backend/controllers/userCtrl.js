@@ -35,7 +35,6 @@ exports.loginCtrl = (req, res, next) => {
           res.status(200).json({
             userId: user.id,
             nom: user.nom,
-            prenom: user.prenom,
             isAdmin: user.isAdmin,
             token: jwt.sign(
               { userId: user.id },
@@ -60,7 +59,6 @@ exports.getOneUserCtrl = (req, res, next) => {
       res.status(200).json({
           userId: user.id,
           nom: user.nom,
-          prenom: user.prenom,
           isAdmin: user.isAdmin,
       });
     })
@@ -70,7 +68,6 @@ exports.getOneUserCtrl = (req, res, next) => {
     .then(user => {
       res.status(200).json({
           nomExt: user.nom,
-          prenomExt: user.prenom,
           isAdminExt: user.isAdmin,
       });
     })

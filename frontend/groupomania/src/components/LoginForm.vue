@@ -38,21 +38,28 @@
             placeholder="Mot de passe"
           />
         </div>
+        <div class="form_row" v-if="mode == 'login' && status == 'error_login'">
+          Adresse mail et/ou mot de passe invalide
+        </div>
+        <div class="form_row" v-if="mode == 'create' && status == 'error_create'">
+          Adresse mail et/ou mot de passe invalide
+        </div>
         <div class="form_row">
           <button
+          v-on:click="userLogin()"
             class="button"
             :class="{ 'button--disabled': !validatedFields }"
-            v-if="mode === 'login'"
-          >
-            Connexion
+            v-if="mode === 'login'">
+            <span v-if="status == 'loading'">Connexion en cours...</span>
+          <span v-else>Connexion</span>
           </button>
           <button
             v-on:click="createAccount()"
             class="button"
             :class="{ 'button--disabled': !validatedFields }"
-            v-else
-          >
-            Créer mon compte
+            v-else>
+          <span v-if="status == 'loading'">Création en cours...</span>
+          <span v-else>Créer mon compte</span>
           </button>
         </div>
       </div>
@@ -61,6 +68,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: "LoginForm",
   data() {
@@ -72,6 +81,12 @@ export default {
       validated: false,
     };
   },
+  mounted: function() {
+    if (this.$store.state.user.userId != -1) {
+      this.$router.push("/profil");
+      return;
+    }
+  },    
   computed: {
     validatedFields() {
       if (this.mode == "create") {
@@ -88,6 +103,7 @@ export default {
         }
       }
     },
+    ...mapState(['status'])
   },
   methods: {
     switchToCreateAccount() {
@@ -96,10 +112,22 @@ export default {
     switchToLogin() {
       this.mode = "login";
     },
+    // fonction pour se connecter, envoie les donné user au backend
+    userLogin: function () {
+      this.$store
+        .dispatch("userLogin", {
+          email: this.email,
+          password: this.psw,
+        })
+        .then((res) => {
+          console.log(res);
+          this.$router.push("/homepage");
+        })
+        .catch((error) => console.error(error));
+    },
     createAccount() {
       this.$store
         .dispatch("createAccount", {
-
           nom: this.username,
           email: this.email,
           password: this.psw,
@@ -110,20 +138,7 @@ export default {
         })
         .catch((error) => console.error(error));
     },
-    // fonction pour se connecter, envoie les donné user au backend
-    userLogin: function () {
-      this.$store
-        .dispatch("userLogin", {
-          nom: this.username,
-          email: this.email,
-          password: this.psw,
-        })
-        .then((res) => {
-          console.log(res);
-          this.$router.push("/homepage");
-        })
-        .catch((error) => console.error(error));
-    },
+    
   },
 };
 </script>

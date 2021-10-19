@@ -6,7 +6,7 @@ exports.createReplyCtrl = (req, res, next) => {
     commentaire: req.body.commentaire,  // recuperation du commentaire
     prenom: req.body.prenom,
     UserId: req.body.UserId,
-    ArticleId: req.body.ArticleId
+    PostId: req.body.PostId
   });
   reply.save() // sauvegarde dans la bdd
     .then(() => res.status(201).json({ message: 'commentaire créé !'}))
@@ -20,7 +20,7 @@ exports.getRepliesCtrl = (req, res, next) => {
             ['createdAt', 'DESC']
         ],
         where: {
-            ArticleId: req.params.id
+            PostId: req.params.id
         }
     })
       .then(replies => res.status(200).json(replies))

@@ -1,8 +1,9 @@
 <template>
   <div class="profil container">
-    <section class="wrapper wrapper__sm">
       <div class="card">
-        <h2 class="card__title">Mon profil</h2>
+        <h1 class="card__title">Espace perso</h1>
+        <p> Bienvenue {{ user.nom }}</p>
+        <img src="https://cdn.xxl.thumbs.canstockphoto.fr/symbole-neutre-classement-gris-r%C3%A9action-utilisateur-icon-figure-profil-vecteurs-eps_csp83470938.jpg" height="150" width="150">
         <div class="form">
           <div class="user">
             <div v-if="mode !== 'modify'" class="inputfield py-3">
@@ -83,14 +84,13 @@
           </div>
         </div>
       </div>
-    </section>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 export default {
-  name: "Profilmode",
+  name: "ProfilDisplay",
   data() {
     return {
       mode: "read",
@@ -111,15 +111,15 @@ export default {
   mounted() {
     console.log(this.$store.state.user);
     if (this.$store.state.user.userId === -1) {
-      this.$router.push("/");
+      this.$router.push("/login");
       return;
     }
-    this.$store.dispatch("showProfile");
+    this.$store.dispatch("getUserInfos");
   },
   methods: {
     logout() {
       this.$store.commit("logout");
-      this.$router.push("/");
+      this.$router.push("/login");
     },
     setRead() {
       this.mode = "read";
