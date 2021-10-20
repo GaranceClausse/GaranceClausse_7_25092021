@@ -11,32 +11,15 @@ if (token) {
     instance.defaults.headers.common['Authorization'] = token; // on applique les auth au header avec le bearer token
 }
 
-let user = localStorage.getItem('user');
-if (!user) {
-    user = {
-        userId: -1,
-        token: ''
-    };
-} else {
-    try {
-        user = JSON.parse(user);
-        instance.defaults.headers.common['Authorization'] = user.token;
-    } catch (ex) {
-        user = {
-            userId: -1,
-            token: ''
-        };
-    }
-}
 const store = createStore({
     state: {
         status: '',
-        user: user,
-        userInfos: {
+        user: {
+            userId: -1,
             nom: '',
             email: '',
-            photo: '',
             isAdmin: false,
+            token: ''
         },
         posts: [],
     },
@@ -44,39 +27,37 @@ const store = createStore({
         setStatus: function (state, status) {
             state.status = status;
         },
-        logUser: function (state, user) {
-            instance.defaults.headers.common['Authorization'] = user.token;
-            localStorage.setItem('user', JSON.stringify(user));
+        setUser: function(state, user) {
+            user.token = 'Bearer ' + user.token;
             state.user = user;
+            localStorage.setItem('token', JSON.stringify(user.token));
+            instance.defaults.headers.common['Authorization'] = user.token;
         },
-        userInfos: function (state, userInfos) {
-            state.userInfos = userInfos;
+        userOn: function(state, data) {
+            state.user.userId = data.userId;
+            state.user.nom = data.nom;
+            state.user.email = data.email;
+            state.user.isAdmin = data.isAdmin;
         },
-        logout: function (state) {
+        logout: function(state) {
+            localStorage.removeItem('token');
             state.user = {
                 userId: -1,
+                nom: '',
+                email: '',
+                isAdmin: false,
                 token: ''
-            }
-            localStorage.removeItem('user');
+            };
         },
         setPost: function(state, posts) {
             state.posts = posts;
         }
     },
-    getters: {
-        formattedHeaders: state => {
-            return {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                "authorization": "bearer " + state.user.token
-            }
-        }
-    },
     actions: {
-        createAccount: ({ commit }, userInfos) => {
+        createAccount: ({ commit }, userData) => {
             commit('setStatus', 'loading');
             return new Promise((resolve, reject) => {
-                instance.post('/auth/signup', userInfos)
+                instance.post('/auth/signup', userData)
                     .then(function (res) {
                         commit('setStatus', 'created');
                         resolve(res);
@@ -88,13 +69,13 @@ const store = createStore({
             })
         },
         // requete post user login
-        userLogin: ({ commit }, userInfos) => {
+        userLogin: ({ commit }, userData) => {
             commit('setStatus', 'loading');
             return new Promise((resolve, reject) => {
-                instance.post('/auth/login', userInfos)
+                instance.post('/auth/login', userData)
                     .then(function (res) {
                         commit('setStatus', '');
-                        commit('logUser', res.data);
+                        commit('setUser', res.data);
                         resolve(res);
                     })
                     .catch(function (error) {
@@ -104,14 +85,18 @@ const store = createStore({
             })
         },
 
-      /*  getUserInfos: ({ commit }) => {
-            instance.get(`/auth/${userInfos.id}`)
+        getuserData: ({commit}, userData) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.get(`/auth/${userData.id}`)
                 .then(function (res) {
-                    commit('userInfos', res.data.userInfos);
+                    resolve(res);
                 })
-                .catch(err => console.log(err.message))
-        },*/
-
+                .catch(function (error) {
+                    reject(error);
+                });
+            })
+        },
         postCreate: ({ commit }, postInfos) => {
             console.log(postInfos);
             return new Promise((resolve, reject) => {
@@ -138,6 +123,7 @@ const store = createStore({
                 });
             })
         },
+        
     }
 })
 

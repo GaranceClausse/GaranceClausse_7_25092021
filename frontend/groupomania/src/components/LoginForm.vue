@@ -116,6 +116,7 @@ export default {
     userLogin: function () {
       this.$store
         .dispatch("userLogin", {
+          nom: this.username,
           email: this.email,
           password: this.psw,
         })

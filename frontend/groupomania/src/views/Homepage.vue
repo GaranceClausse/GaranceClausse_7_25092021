@@ -1,8 +1,9 @@
 <template>
   <div class="homepage justify-content-center container col-10">
         <MessageDisplay>
-            
+
         </MessageDisplay>
+        
 </div>
 </template>
 

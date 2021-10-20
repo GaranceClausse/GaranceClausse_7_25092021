@@ -1,5 +1,5 @@
 <template>
-  <div class="col-10">
+  <div class="">
     <div class="jumbotron card homepage">
       <div class="createPost">
         <h1 class="card_title">Quoi de neuf? Partagez avec vos collègues!</h1>
@@ -37,6 +37,7 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>

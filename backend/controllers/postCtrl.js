@@ -4,7 +4,7 @@ const fs = require('fs');
 //controlleur pour la creation d'une nouvelle publication
 exports.createPostCtrl = (req, res, next) => {
   const postObj = {
-    titre: req.body.titre,
+    title: req.body.title,
     UserId: req.body.UserId
   }
   const post = Post.build({ // creation du nouvel objet sauce grace au model pré-établie

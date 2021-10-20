@@ -1,6 +1,7 @@
 const auth        = require('../middleware/auth');
 const postCtrl    = require('../controllers/postCtrl');
 const router      = require('express').Router();
+const multer = require('../middleware/multer'); //gestion des fichiers images
 
 /**
  * [createPostCtrl description]

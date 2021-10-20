@@ -8,7 +8,7 @@
           <div class="user">
             <div v-if="mode !== 'modify'" class="inputfield py-3">
               <label for="username">Utilisateur :</label>
-              <input type="text" id="username" name="username" disabled />
+              <input type="text" id="username" name="username" :placeholder="user.nom" disabled />
             </div>
             <div v-if="mode !== 'modify'" class="inputfield py-3">
               <label for="email">Adresse email :</label>
@@ -105,7 +105,7 @@ export default {
       return this.psw !== "" && this.psw === this.confirm;
     },
     ...mapState({
-      user: "userInfos",
+      user: "user",
     }),
   },
   mounted() {
