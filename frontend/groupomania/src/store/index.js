@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
 
 const axios = require('axios');
 
@@ -15,7 +15,7 @@ const store = createStore({
     state: {
         status: '',
         user: {
-            userId: -1,
+            userId: 0,
             nom: '',
             email: '',
             isAdmin: false,
@@ -42,7 +42,7 @@ const store = createStore({
         logout: function(state) {
             localStorage.removeItem('token');
             state.user = {
-                userId: -1,
+                userId: 0,
                 nom: '',
                 email: '',
                 isAdmin: false,
@@ -85,10 +85,26 @@ const store = createStore({
             })
         },
 
-        getuserData: ({commit}, userData) => {
+        getUserData: ({commit}, userData) => {
             commit;
             return new Promise((resolve, reject) => {
                 instance.get(`/auth/${userData.id}`)
+                .then(function (res) {
+                    resolve(res);
+                })
+                .catch(function (error) {
+                    reject(error);
+                });
+            })
+        },
+        userDelete: ({commit}, userData) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.delete(`/auth/${userData.id}`, {
+                    data: {
+                        password: userData.password
+                    }
+                })
                 .then(function (res) {
                     resolve(res);
                 })

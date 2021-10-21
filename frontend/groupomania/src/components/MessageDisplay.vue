@@ -5,13 +5,25 @@
         <h1 class="card_title">Quoi de neuf? Partagez avec vos collègues!</h1>
 
         <form class="" enctype="multipart/form-data">
-          <div class="col-6 center mx-auto my-5">
+          <div class="col-6 center mx-auto my-2">
             <input
               v-model="title"
               type="text"
               name="title"
               placeholder="Titre..."
-              class="form_row_input col-12 py-2"
+              class="form_row_input col-12 py-1"
+              aria-required="true"
+              @input="formValid()"
+            />
+          </div>
+
+          <div class="col-6 center mx-auto my-2 ">
+            <input
+              v-model="content"
+              type="text"
+              name="content"
+              placeholder="Quoi de neuf?"
+              class="form_row_input col-12 py-3"
               aria-required="true"
               @input="formValid()"
             />
@@ -24,20 +36,23 @@
               ref="file"
               accept=".png, .jpg, .jpeg, .gif"
               @change="fileSetting"
-              aria-required="true"
             />
           </div>
 
           <img v-if="image.length > 0" :src="image" alt="" />
 
-          <button type="button" class="card_action btn" :disabled="!validated" @click.prevent="postCreate()">
+          <button
+            type="button"
+            class="card_action btn"
+            :disabled="!validated"
+            @click.prevent="postCreate()"
+          >
             Poster
           </button>
         </form>
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -49,14 +64,15 @@ export default {
     return {
       title: "",
       file: {},
+      content: "",
       image: "",
       validated: false,
     };
   },
   mounted: function () {
-    if (this.$store.state.user.userId === 0) {
+    if (this.$store.state.user.userId != -1) {
       this.$store
-        .dispatch("getUserInfos", { id: 0 })
+        .dispatch("getUserData")
         .then((user) => {
           this.$store.commit("userLogin", user.data);
         })
@@ -95,6 +111,7 @@ export default {
       const formData = new FormData();
       formData.append("file", this.file);
       formData.append("title", this.title);
+      formData.append("content", this.content);
       formData.append("UserId", this.user.userId);
       console.log(this.file);
       this.$store
@@ -109,7 +126,7 @@ export default {
     },
     // validation formulaire
     formValid: function () {
-      if (this.title.length > 0 && this.image.length > 0) {
+      if (this.title.length > 0 && this.content.length > 0) {
         this.validated = true;
         return;
       }
@@ -131,7 +148,6 @@ export default {
   opacity: 0.85;
   text-align: center;
 }
-
 
 .card_action {
   text-decoration: underline;

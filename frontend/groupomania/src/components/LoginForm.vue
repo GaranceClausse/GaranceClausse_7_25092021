@@ -82,7 +82,7 @@ export default {
     };
   },
   mounted: function() {
-    if (this.$store.state.user.userId != -1) {
+    if (this.$store.state.user.userId != 0) {
       this.$router.push("/profil");
       return;
     }
@@ -116,13 +116,12 @@ export default {
     userLogin: function () {
       this.$store
         .dispatch("userLogin", {
-          nom: this.username,
           email: this.email,
           password: this.psw,
         })
         .then((res) => {
           console.log(res);
-          this.$router.push("/homepage");
+          this.$router.push("/profil");
         })
         .catch((error) => console.error(error));
     },

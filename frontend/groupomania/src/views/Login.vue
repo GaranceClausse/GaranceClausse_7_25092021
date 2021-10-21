@@ -18,7 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 .login {
-    background: no-repeat center/80% url("/src/assets/background.png");
+    background-image: no-repeat center/80% url("/src/assets/background.png");
     background-size: 100%;
 }
 </style>
