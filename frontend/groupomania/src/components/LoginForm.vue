@@ -32,7 +32,7 @@
         </div>
         <div class="form-row">
           <input
-            v-model="psw"
+            v-model="password"
             class="form_row_input col-12"
             type="password"
             placeholder="Mot de passe"
@@ -77,7 +77,7 @@ export default {
       mode: "login",
       username: "",
       email: "",
-      psw: "",
+      password: "",
       validated: false,
     };
   },
@@ -90,13 +90,13 @@ export default {
   computed: {
     validatedFields() {
       if (this.mode == "create") {
-        if (this.email != "" && this.username != "" && this.psw != "") {
+        if (this.email != "" && this.username != "" && this.password != "") {
           return true;
         } else {
           return false;
         }
       } else {
-        if (this.email != "" && this.psw != "") {
+        if (this.email != "" && this.password != "") {
           return true;
         } else {
           return false;
@@ -117,7 +117,7 @@ export default {
       this.$store
         .dispatch("userLogin", {
           email: this.email,
-          password: this.psw,
+          password: this.password,
         })
         .then((res) => {
           console.log(res);
@@ -130,7 +130,7 @@ export default {
         .dispatch("createAccount", {
           nom: this.username,
           email: this.email,
-          password: this.psw,
+          password: this.password,
         })
         .then((res) => {
           console.log(res);

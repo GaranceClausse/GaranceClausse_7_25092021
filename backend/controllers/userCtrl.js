@@ -44,6 +44,7 @@ exports.loginCtrl = (req, res, next) => {
           res.status(200).json({
             userId: user.id,
             nom: user.nom,
+            email: user.email,
             isAdmin: user.isAdmin,
             /****fonction sign encode un nouveau token */
             token: jwt.sign(

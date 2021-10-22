@@ -97,6 +97,22 @@ const store = createStore({
                 });
             })
         },
+        userModify: ({commit}, userData) => {
+            commit;
+            return new Promise((resolve, reject) => {
+                instance.put(`/auth/${userData.id}`, {
+                    data: {
+                        password: userData.password
+                    }
+                })
+                .then(function (res) {
+                    resolve(res);
+                })
+                .catch(function (error) {
+                    reject(error);
+                });
+            })
+        },
         userDelete: ({commit}, userData) => {
             commit;
             return new Promise((resolve, reject) => {

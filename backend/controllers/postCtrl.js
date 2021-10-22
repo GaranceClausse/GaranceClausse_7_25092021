@@ -8,7 +8,7 @@ exports.createPostCtrl = (req, res, next) => {
     content: req.body.content,
     UserId: req.body.UserId
   }
-  const post = Post.build({ // creation du nouvel objet sauce grace au model pré-établie
+  const post = Post.build({ // creation du nouvel objet post grace au model pré-établie
     ...postObj,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`, //creation URL image
   });

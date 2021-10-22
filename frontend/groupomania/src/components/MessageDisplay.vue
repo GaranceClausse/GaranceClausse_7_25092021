@@ -2,7 +2,7 @@
   <div class="">
     <div class="jumbotron card homepage">
       <div class="createPost">
-        <h1 class="card_title">Quoi de neuf? Partagez avec vos collègues!</h1>
+        <h1 class="card_title">Quoi de neuf {{ user.nom }} ? Partagez avec vos collègues!</h1>
 
         <form class="" enctype="multipart/form-data">
           <div class="col-6 center mx-auto my-2">
@@ -17,7 +17,7 @@
             />
           </div>
 
-          <div class="col-6 center mx-auto my-2 ">
+          <div class="col-6 center mx-auto my-2">
             <input
               v-model="content"
               type="text"
@@ -69,24 +69,24 @@ export default {
       validated: false,
     };
   },
-  mounted: function () {
-    if (this.$store.state.user.userId != -1) {
-      this.$store
-        .dispatch("getUserData")
-        .then((user) => {
-          this.$store.commit("userLogin", user.data);
-        })
-        .catch((error) => {
-          console.error(error);
-          this.$store.commit("logout");
-          this.$router.push("/login");
-        });
-    }
-  },
+  
   computed: {
     ...mapState({
       user: "user",
     }),
+  },
+  mounted: function () {      
+    console.log(this.$store.state.user);
+    if (this.$store.state.user.userId === 0) {
+      this.$store
+        .dispatch("getUserData", { id: 0 })
+        .then((user) => {
+          this.$store.commit("userOn", user.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   },
   methods: {
     fileSetting: function (event) {
@@ -126,7 +126,10 @@ export default {
     },
     // validation formulaire
     formValid: function () {
-      if (this.title.length > 0 && this.content.length > 0) {
+      if (
+        (this.title.length > 0 && this.content.length > 0) ||
+        (this.title.length > 0 && this.image.length > 0)
+      ) {
         this.validated = true;
         return;
       }

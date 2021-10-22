@@ -17,7 +17,6 @@ const multer = require('../middleware/multer'); //gestion des fichiers images
 router.get('/', auth, postCtrl.getAllPostsCtrl);
 router.post('/', auth, multer, postCtrl.createPostCtrl);
 router.put('/:id', auth, multer, postCtrl.modifyPostCtrl);
-router.post('/post', auth, multer, postCtrl.createPostCtrl);
 router.delete('/:id', auth, postCtrl.deletePostCtrl);
 router.post('/:id/like', postCtrl.likePostCtrl);
 

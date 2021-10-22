@@ -62,7 +62,7 @@
             class="card_action"
             @click="setModify"
           >
-            Modifier mes informations
+            Modifier mon mot de passe
           </button>
           <button role="button" class="card_action" @click="setDelete">
             Supprimer mon compte
@@ -87,7 +87,7 @@
           </button>
           <button
             v-if="mode === 'modify'"
-            @click="setRead()"
+            @click="userModify()"
             type="submit"
             class="btn btn__lg btn__success"
             :disabled="!validatedFields"
@@ -98,7 +98,8 @@
             v-if="mode === 'delete'"
             class="btn btn__lg btn__danger"
             @click="userDelete()"
-          ><i class="fas fa-trash-alt"></i>
+          >
+            <i class="fas fa-trash-alt"></i>
             Supprimer
           </button>
         </div>
@@ -114,10 +115,6 @@ export default {
   data() {
     return {
       mode: "read",
-      username: "",
-      email: "",
-      password: "",
-      confirm: "",
     };
   },
   computed: {
@@ -156,6 +153,23 @@ export default {
     },
     setDelete() {
       this.mode = "delete";
+    },
+    userModify: function () {
+      if (confirm("Etes vous sûr de vouloir modifier votre mot de passe ?")) {
+        this.$store
+          .dispatch("userModify", {
+            id: this.user.userId,
+            password: this.password,
+          })
+          .then((res) => {
+            console.log(res);
+            this.mode = "read";
+            this.$router.push("/profil");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     userDelete: function () {
       if (confirm("Etes vous sûr de vouloir supprimer votre compte ?")) {
