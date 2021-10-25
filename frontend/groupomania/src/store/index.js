@@ -155,7 +155,34 @@ const store = createStore({
                 });
             })
         },
-        
+        postLike: ({commit}, data) => {
+            return new Promise((resolve, reject) => {
+                commit;
+                instance.post(`/post/${data.id}/like`, {
+                    like: data.like,
+                    userId: data.userId
+                })
+                .then(function (res) {
+                    resolve(res);
+                })
+                .catch(function (error) {
+                    reject(error);
+                });
+            })
+        },
+        //requete delete article
+        postDelete: ({commit}, postId) => {
+            return new Promise((resolve, reject) => {
+                commit;
+                instance.delete(`/post/${postId}`)
+                .then(function (res) {
+                    resolve(res);
+                })
+                .catch(function (error) {
+                    reject(error);
+                });
+            })
+        },
     }
 })
 

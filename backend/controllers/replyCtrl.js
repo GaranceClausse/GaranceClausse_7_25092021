@@ -4,7 +4,7 @@ const Reply = require('../models/replyModel');
 exports.createReplyCtrl = (req, res, next) => {
   const reply = Reply.build({ // creation du nouvel objet sauce grace au model pré-établie
     commentaire: req.body.commentaire,  // recuperation du commentaire
-    prenom: req.body.prenom,
+    nom: req.body.nom,
     UserId: req.body.UserId,
     PostId: req.body.PostId
   });

@@ -6,7 +6,7 @@ exports.createPostCtrl = (req, res, next) => {
   const postObj = {
     title: req.body.title,
     content: req.body.content,
-    UserId: req.body.UserId
+    userId: req.body.userId
   }
   const post = Post.build({ // creation du nouvel objet post grace au model pré-établie
     ...postObj,

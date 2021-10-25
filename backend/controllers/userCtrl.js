@@ -7,7 +7,7 @@ const Maskdata = require('maskdata');
 
 exports.signupCtrl = (req, res, next) => {
 
-  var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,300}$/;
+  var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,25}$/;
   if (re.test(req.body.password) == true) {
 
     bcrypt.hash(req.body.password, 10) // cryptage du mdp
@@ -19,12 +19,12 @@ exports.signupCtrl = (req, res, next) => {
         });
         user.save() // sauvegarde les informations utilisateur
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-          .catch(error => res.status(400).json({ error : "ouuups" }));
+          .catch(error => res.status(400).json({ error }));
       })
       .catch(error => res.status(500).json({ error }));
   }
   else {
-    res.status(400).json({ error : "caca" });
+    res.status(400).json({ error : "pbm avec le mdp" });
   }
 };
 
@@ -60,19 +60,31 @@ exports.loginCtrl = (req, res, next) => {
 };
 
 // controlleur get one user
+
 exports.getOneUserCtrl = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1]; //recuperation du token
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET); // decodage du token grace a la clé 
+  if(req.params.id == 0) {
+    const token = req.headers.authorization.split(' ')[1]; //recuperation du token
+    const decodedToken = jwt.verify(token, process.env.RND_TKN); // decodage du token grace a la clé 
     const id = decodedToken.userId;
-  User.findOne(id)
+    User.findByPk(id)
     .then(user => {
       res.status(200).json({
-        userId: user.id,
-        nom: user.nom,
-        isAdmin: user.isAdmin,
+          userId: user.id,
+          nom: user.nom,
+          isAdmin: user.isAdmin,
       });
     })
     .catch(error => res.status(500).json({ error }));
+  } else {
+    User.findByPk(req.params.id)
+    .then(user => {
+      res.status(200).json({
+          nomExt: user.nom,
+          isAdminExt: user.isAdmin,
+      });
+    })
+    .catch(error => res.status(500).json({ error }));
+  }
 };
 
 // controlleur modify one user

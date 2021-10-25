@@ -39,7 +39,7 @@
             />
           </div>
 
-          <img v-if="image.length > 0" :src="image" alt="" />
+          <img v-if="image.length > 0" :src="image" alt="" class="imgPost" />
 
           <button
             type="button"
@@ -59,7 +59,7 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "MessageDisplay",
+  name: "PostCreate",
   data() {
     return {
       title: "",
@@ -108,7 +108,7 @@ export default {
     },
     // fonction creation post
     postCreate: function () {
-      const formData = new FormData();
+      const formData = new FormData
       formData.append("file", this.file);
       formData.append("title", this.title);
       formData.append("content", this.content);
@@ -174,5 +174,9 @@ export default {
   background: #d1515a;
   color: #fafafa;
   text-transform: uppercase;
+}
+
+.imgPost {
+    max-width: 220px;
 }
 </style>
