@@ -1,7 +1,6 @@
 const User = require("../models/userModel.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Maskdata = require('maskdata');
 
 
 
@@ -71,6 +70,7 @@ exports.getOneUserCtrl = (req, res, next) => {
       res.status(200).json({
           userId: user.id,
           nom: user.nom,
+          email: user.email,
           isAdmin: user.isAdmin,
       });
     })
@@ -80,6 +80,7 @@ exports.getOneUserCtrl = (req, res, next) => {
     .then(user => {
       res.status(200).json({
           nomExt: user.nom,
+          emailExt: user.email,
           isAdminExt: user.isAdmin,
       });
     })

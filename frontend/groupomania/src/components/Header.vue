@@ -7,10 +7,8 @@
   </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-            <li class="nav-item"><router-link class="active nav-link" to="/homepage">Fil d'actualité</router-link></li>
-            <li class="nav-item"><router-link class="active nav-link" to="/login">Se connecter</router-link></li>
             <li class="nav-item"><router-link class="active nav-link" to="/profil">Profil</router-link></li>
-            <li class="nav-item" @click="emitLogout"><router-link class="active nav-link" to="/">Se déconnecter</router-link></li>
+            <li class="nav-item"><router-link class="active nav-link" to="/homepage">Fil d'actualité</router-link></li>
           </ul>
         </div>
       </div>

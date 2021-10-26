@@ -34,6 +34,8 @@ export default {
         .dispatch("getUserData", { id: 0 })
         .then((user) => {
           this.$store.commit("userOn", user.data);
+          
+    console.log(this.$store.state.user);
         })
         .catch((error) => {
           console.error(error);
