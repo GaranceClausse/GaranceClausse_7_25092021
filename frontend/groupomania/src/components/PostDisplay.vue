@@ -5,11 +5,11 @@
           <i class="fas fa-trash-alt deleteIcon"></i>
         </span>
       <div class="postUser col-8 py-3">
-        <span class="postUserName"> Post de {{ userExt.nomExt }} </span>
-        <span class="postUserDate"> créé le {{ post.createdAt.split("T")[0] }} </span>
+        <span class="postUserName"> Post de <span class="font-weight-bold">{{ userExt.nomExt }}</span> </span>
+        <span class="postUserDate"> créé le {{ post.createdAt.split("T")[0] }} à {{ post.createdAt.split("T")[1].split(".")[0] }}</span>
         
       </div>
-      <h2>{{ post.title }}</h2>
+      <h2 class="postTitle">{{ post.title }}</h2>
 
       <div class="postCard">
         <div class="postContent py-3">
@@ -174,29 +174,6 @@ export default {
   align-items: center;
 }
 
-.card_action {
-  text-decoration: underline;
-  border: none;
-  background-color: #fafafa;
-}
-
-.card_title {
-  font-size: 25px;
-}
-
-.btn {
-  font-family: "Roboto", sans-serif;
-  font-size: 15px;
-  outline: 0;
-  border: 0;
-  border-radius: 12px;
-  width: 100%;
-  padding: 15px;
-  margin: 10px auto;
-  background: #d1515a;
-  color: #fafafa;
-  text-transform: uppercase;
-}
 
 button:disabled {
     color:#7a7878;
@@ -212,6 +189,20 @@ button:disabled {
     @media all and (max-width: 380px) {
     right:20px;
   }
+}
+
+.postUser {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    color:#4b4949;
+}
+
+.postTitle {
+    padding-top: 50px;
+    @media all and (max-width: 472px) {
+    padding-top: 80px;
+    }
 }
 
 .postCard {

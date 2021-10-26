@@ -2,12 +2,11 @@
   <div class="profil container">
     <div class="card">
       <h1 class="card__title">Espace perso</h1>
-      <p>Bienvenue {{ user.nom }}</p>
-      <img
-        src="https://cdn.xxl.thumbs.canstockphoto.fr/symbole-neutre-classement-gris-r%C3%A9action-utilisateur-icon-figure-profil-vecteurs-eps_csp83470938.jpg"
-        height="150"
-        width="150"
-      />
+      <div class="card presentation">
+      <p>Bienvenue {{ user.nom }}!!</p>
+      <p>Te voilà sur ton espace personnel du réseau social groupomania. </p>
+      <p> N'hésite pas à aller voir les dernières publications de tes collègues! </p>
+      </div>
       <div class="form">
         <div class="user">
           <div v-if="mode !== 'modify'" class="inputfield py-3">
@@ -221,20 +220,21 @@ export default {
 .card {
   position: relative;
   z-index: 1;
-  width: 550px;
-  height: 100%;
-  margin: 0 auto;
-  padding: 45px;
+  max-width: 650px;
+  margin: 0 auto 100px;
+  padding: 25px;
   border-radius: 12px;
   background-color: #f2f2f2;
   opacity: 0.85;
+  align-items: center;
+
 
   &__title {
     padding-bottom: 45px;
   }
 
   &__option {
-    padding-top: 95px;
+    padding-top: 75px;
     display: flex;
     flex-direction: column;
   }
@@ -246,5 +246,11 @@ export default {
       color: #d1515a;
     }
   }
+}
+
+.presentation{
+  font-size: 20px;
+  background-color: #fafafa;
+  margin-bottom: 0;
 }
 </style>

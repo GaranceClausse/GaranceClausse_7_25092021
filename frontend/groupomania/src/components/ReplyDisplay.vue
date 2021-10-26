@@ -6,7 +6,7 @@
           <div class="replyCard__user">
             <span class="replyCard__date">
               Ecrit par <span class="font-weight-bold">{{ reply.nom }}</span> le
-              {{ reply.createdAt.split("T")[0] }}
+              {{ reply.createdAt.split("T")[0] }} à {{ reply.createdAt.split("T")[1].split(".")[0] }}
             </span>
           </div>
           <span
@@ -162,7 +162,7 @@ export default {
   &__text {
       padding-top: 1rem;
     @media all and (max-width: 472px) {
-      padding-top: 40px;
+      padding-top: 55px;
     }
   }
 }

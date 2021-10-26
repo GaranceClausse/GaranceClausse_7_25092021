@@ -185,7 +185,6 @@ const store = createStore({
         },
         replyPost: ({commit}, replyData) => {
             
-            console.log(replyData);
             return new Promise((resolve, reject) => {
                 commit;
                 instance.post('/reply', replyData)

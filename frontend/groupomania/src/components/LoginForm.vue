@@ -27,7 +27,7 @@
             v-model="username"
             class="form_row_input col-12"
             type="text"
-            placeholder="Nom"
+            placeholder="Pseudo"
           />
         </div>
         <div class="form-row">
