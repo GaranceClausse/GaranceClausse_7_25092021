@@ -126,7 +126,6 @@ export default {
     }),
   },
   mounted() {
-    console.log(this.$store.state.user);
     if (this.$store.state.user.userId === 0) {
       this.$store
         .dispatch("getUserData", { id: 0 })

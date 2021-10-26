@@ -1,9 +1,9 @@
 <template>
   <div class="post">
     <div class="jumbotron card post">
-      <div class="postDelete" @click="postDelete()">
-          Supprimer
+      <div class="postDelete" v-if="authorised(this.post)" @click="postDelete()">
         <i class="fas fa-trash-alt"></i>
+        Supprimer
       </div>
 
       <div class="postUser">
@@ -17,7 +17,7 @@
       </div>
 
       <div class="postPic">
-        <img :src="post.imageUrl" :alt="post.title" class="imgPost"/>
+        <img :src="post.imageUrl" :alt="post.title" class="imgPost" />
       </div>
 
       <div class="postLikes">
@@ -40,19 +40,29 @@
           <span> {{ post.dislikes }} </span>
         </button>
       </div>
+      <div class="postComment" @click="toggleReply" :class="{ replyActive: revele }">
+        <i class="fas fa-comment-alt"></i> Cacher/ Montrer les commentaires
+        </div>
+        <Reply v-if="revele" :revele="revele" :postId="postId" />
+      
     </div>
   </div>
 </template>
 
 <script>
+import Reply from "../components/ReplyDisplay.vue";
+
 export default {
   name: "PostDisplay",
   props: ["post", "user"],
+  components: {
+    Reply,
+  },
   data() {
     return {
       userExt: {},
       postId: this.post.id,
-      revele: false,
+      revele: true,
       liked: false,
       disliked: false,
       like: 0,
@@ -133,9 +143,12 @@ export default {
         this.disliked = true;
       }
     },
+    toggleReply: function () {
+      this.revele = !this.revele;
+    },
     // autorisation admin ou user
-    authorised: function () {
-      if (this.user.isAdmin) {
+    authorised: function (model) {
+      if (this.user.userId == model.UserId || this.user.isAdmin) {
         return true;
       }
       return false;
@@ -143,7 +156,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="scss" scoped>
 .card {
@@ -183,6 +195,6 @@ export default {
 }
 
 .imgPost {
-    max-width: 220px;
+  max-width: 220px;
 }
 </style>

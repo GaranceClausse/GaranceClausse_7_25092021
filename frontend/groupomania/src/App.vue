@@ -29,7 +29,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #091F43;
-  background-image: url("../src/assets/background.png");;
+  background: #ced2da;
 }
 
 #nav {

@@ -2,9 +2,10 @@ const Reply = require('../models/replyModel');
 
 //controlleur pour la creation d'un nouveau commentaire
 exports.createReplyCtrl = (req, res, next) => {
-  const reply = Reply.build({ // creation du nouvel objet sauce grace au model pré-établie
-    commentaire: req.body.commentaire,  // recuperation du commentaire
-    nom: req.body.nom,
+  
+  console.log(req.body.comment + "ok");
+  const reply = Reply.build({ // creation du nouvel objet reply grace au model pré-établie
+    comment: req.body.comment,  // recuperation du commentaire
     UserId: req.body.UserId,
     PostId: req.body.PostId
   });
@@ -14,7 +15,7 @@ exports.createReplyCtrl = (req, res, next) => {
 };
 
 // controlleur qui renvoi tous les commentaires de la bdd du plus recent au plus ancien
-exports.getRepliesCtrl = (req, res, next) => {
+exports.getAllRepliesCtrl = (req, res, next) => {
     Reply.findAll({
         order: [
             ['createdAt', 'DESC']
@@ -28,7 +29,7 @@ exports.getRepliesCtrl = (req, res, next) => {
 };
 
 // controlleur qui supprime un commentaire de la bdd
-exports.deleteReplyCtrl = (req, res, next) => {
+exports.deleteOneReplyCtrl = (req, res, next) => {
     Reply.findByPk(req.params.id) //trouve le commentaire en question dans la bdd par son id
     .then(reply => {
         reply.destroy() // supprime le commentaire trouvé

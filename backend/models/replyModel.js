@@ -2,28 +2,24 @@ const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
-    dialect: 'mysql'    
+    dialect: 'mysql'
 });
 const User = require('./userModel');
 const Post = require('./postModel');
 
 // creation model Comment
 const Reply = sequelize.define('Reply', {
-  // definition des attributs du model
+    // definition des attributs du model
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
     },
-    content: {
-        type: DataTypes.TEXT,
+    comment: {
+        type: DataTypes.STRING,
         allowNull: false
     },
-    id_user: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    }
 });
 
 // `sequelize.define` also returns the model

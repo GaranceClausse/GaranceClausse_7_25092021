@@ -2,11 +2,10 @@
     <div class="reply">
         <div class="replyList">
 
-            <div class="replyListCarte" v-for="reply in replis" :key="reply.id">
+            <div class="replyListCarte" v-for="reply in replies" :key="reply.id">
 
                 <div class="replyListCarteInfo">
                     <div class="replyListCarteInfoUser">
-                        <span> {{ reply.nom }} </span>
                         <span class="replyListCarteInfoUserDate"> {{ reply.createdAt.split('T')[0] }} </span>
                     </div>
                     
@@ -36,9 +35,9 @@
 import { mapState } from 'vuex';
 export default {
     name: "Reply",
-    props: ["revele", "articleId", "toggleReply"],
+    props: ["revele", "postId", "toggleReply"],
     mounted: function() {
-        this.replyGetAll();
+        this.repliesGetAll();
     },
     data() {
         return {
@@ -56,19 +55,18 @@ export default {
         replyPost: function() {
             this.$store.dispatch('replyPost', {
                 comment: this.comment,
-                prenom: this.user.prenom,
                 UserId: this.user.userId,
-                ArticleId: this.articleId
+                PostId: this.postId
             })
             .then((res) => {
                 console.log(res);
-                this.replyGetAll();
+                this.repliesGetAll();
                 this.comment = "";
                 this.validated = false;
             }).catch(error => console.error(error))
         },
-        replyGetAll: function() {
-            this.$store.dispatch('replyGetAll', this.articleId)
+        repliesGetAll: function() {
+            this.$store.dispatch('repliesGetAll', this.postId)
             .then((res) => {
                 console.log(res)
                 this.replies = res.data;
@@ -80,20 +78,20 @@ export default {
                 this.$store.dispatch('replyDelete', id)
                 .then((res) => {
                     console.log(res)
-                    this.replyGetAll();
+                    this.repliesGetAll();
                 })
                 .catch(error => console.error(error))
             }
         },
         replyValid: function() {
-            if(this.commentaire.length > 2) {
+            if(this.comment.length > 2) {
                 this.validated = true;
                 return;
             }
             this.validated = false;
         },
-        authorised: function(model) {
-            if( this.user.userId == model.UserId || this.user.isAdmin ) {
+        authorised: function() {
+            if(this.user.isAdmin ) {
                 return true
             }
             return false

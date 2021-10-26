@@ -113,7 +113,7 @@ export default {
       formData.append("title", this.title);
       formData.append("content", this.content);
       formData.append("UserId", this.user.userId);
-      console.log(this.file);
+      console.log(this.user.userId);
       this.$store
         .dispatch("postCreate", formData)
         .then((res) => {

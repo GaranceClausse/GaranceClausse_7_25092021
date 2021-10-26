@@ -170,7 +170,7 @@ const store = createStore({
                 });
             })
         },
-        //requete delete article
+        //requete delete post
         postDelete: ({commit}, postId) => {
             return new Promise((resolve, reject) => {
                 commit;
@@ -183,6 +183,46 @@ const store = createStore({
                 });
             })
         },
+        replyPost: ({commit}, replyData) => {
+            
+            console.log(replyData);
+            return new Promise((resolve, reject) => {
+                commit;
+                instance.post('/reply', replyData)
+                .then(function (res) {
+                    resolve(res);
+                })
+                .catch(function (error) {
+                    reject(error);
+                });
+            })
+        },
+        // requete get all comments d'un post en fonction de l'id de ce dernier
+        repliesGetAll: ({commit}, postId) => {
+            return new Promise((resolve, reject) => {
+                commit;
+                instance.get(`/reply/${postId}`)
+                .then(function (res) {
+                    resolve(res);
+                })
+                .catch(function (error) {
+                    reject(error);
+                });
+            })
+        },
+        //requete delete reply
+        replyDelete: ({commit}, replyId) => {
+            return new Promise((resolve, reject) => {
+                commit;
+                instance.delete(`/reply/${replyId}`)
+                .then(function (res) {
+                    resolve(res);
+                })
+                .catch(function (error) {
+                    reject(error);
+                });
+            })
+        }
     }
 })
 

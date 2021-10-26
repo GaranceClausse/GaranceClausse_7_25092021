@@ -36,11 +36,11 @@ const Post = sequelize.define('Post', {
     },
     userLiked: {
         type: DataTypes.STRING,
-        defaultValue: ''
+        defaultValue: ' '
     },
     userDisliked: {
         type: DataTypes.STRING,
-        defaultValue: ''
+        defaultValue: ' '
     }
 });
 
