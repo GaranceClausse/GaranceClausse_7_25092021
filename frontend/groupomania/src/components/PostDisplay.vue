@@ -1,50 +1,54 @@
 <template>
   <div class="post">
     <div class="jumbotron card post">
-      <div class="postDelete" v-if="authorised(this.post)" @click="postDelete()">
-        <i class="fas fa-trash-alt"></i>
-        Supprimer
-      </div>
-
-      <div class="postUser">
-        <span> {{ userExt.nomExt }} </span>
-        <span class="postUserDate"> {{ post.createdAt.split("T")[0] }} </span>
+        <span class="postDelete px-4" v-if="authorised(this.post)" @click="postDelete()">
+          <i class="fas fa-trash-alt deleteIcon"></i>
+        </span>
+      <div class="postUser col-8 py-3">
+        <span class="postUserName"> Post de {{ userExt.nomExt }} </span>
+        <span class="postUserDate"> créé le {{ post.createdAt.split("T")[0] }} </span>
+        
       </div>
       <h2>{{ post.title }}</h2>
 
-      <div class="postContent">
-        <span>{{ post.content }} </span>
-      </div>
-
-      <div class="postPic">
-        <img :src="post.imageUrl" :alt="post.title" class="imgPost" />
-      </div>
-
-      <div class="postLikes">
-        <button
-          class="postLike"
-          :disabled="disliked"
-          :class="{ focused: liked }"
-          @click="onLike"
-        >
-          <i class="fas fa-thumbs-up"></i>
-          <span> {{ post.likes }} </span>
-        </button>
-        <button
-          class="postDislike"
-          :disabled="liked"
-          :class="{ focused: disliked }"
-          @click="onDislike"
-        >
-          <i class="fas fa-thumbs-down"></i>
-          <span> {{ post.dislikes }} </span>
-        </button>
-      </div>
-      <div class="postComment" @click="toggleReply" :class="{ replyActive: revele }">
-        <i class="fas fa-comment-alt"></i> Cacher/ Montrer les commentaires
+      <div class="postCard">
+        <div class="postContent py-3">
+          <span>{{ post.content }} </span>
         </div>
-        <Reply v-if="revele" :revele="revele" :postId="postId" />
-      
+
+        <div class="postPic">
+          <img :src="post.imageUrl" :alt="post.title" class="imgPost" />
+        </div>
+
+        <div class="postLikes">
+          <button
+            class="postLike postLike__left"
+            :disabled="disliked"
+            :class="{ focused: liked }"
+            @click="onLike"
+          >
+            <i class="fas fa-thumbs-up px-2"></i>
+            <span> {{ post.likes }} </span>
+          </button>
+          <button
+            class="postLike postLike__mid"
+            :disabled="liked"
+            :class="{ focused: disliked }"
+            @click="onDislike"
+          >
+            <i class="fas fa-thumbs-down px-2"></i>
+            <span> {{ post.dislikes }} </span>
+          </button>
+          <button
+            class="postLike postLike__right"
+            :class="{ replyActive: revele }"
+            @click="toggleReply"
+          >
+            <i class="fas fa-comment-alt"></i>
+          </button>
+        </div>
+      </div>
+      <Reply v-if="revele" :revele="revele" :postId="postId" />
     </div>
   </div>
 </template>
@@ -62,7 +66,7 @@ export default {
     return {
       userExt: {},
       postId: this.post.id,
-      revele: true,
+      revele: false,
       liked: false,
       disliked: false,
       like: 0,
@@ -167,7 +171,7 @@ export default {
   border-radius: 12px;
   background-color: #f2f2f2;
   opacity: 0.85;
-  text-align: center;
+  align-items: center;
 }
 
 .card_action {
@@ -194,7 +198,54 @@ export default {
   text-transform: uppercase;
 }
 
+button:disabled {
+    color:#7a7878;
+}
+
+.deleteIcon {
+    color: #4b4949;
+    padding: 10px;
+    border: 1px solid #4b4949;
+    border-radius: 20%;
+    position: absolute;
+    top: 18px; right: 40px;
+    @media all and (max-width: 380px) {
+    right:20px;
+  }
+}
+
+.postCard {
+  max-width: 380px;
+  @media all and (max-width: 472px) {
+    max-width: 300px;
+  }
+  @media all and (max-width: 380px) {
+    max-width: 210px;
+  }
+}
+
+.postLike {
+  width: 33.3333333333333333333333333333%;
+  color: #4b4949;
+  border: 1px solid #b1acac;
+
+  &__left {
+    border-radius: 0 0 0 10px;
+    border-right: none;
+  }
+  &__mid {
+    border-left: none;
+    border-right: none;
+  }
+  &__right {
+    border-radius: 0 0 10px 0;
+    border-left: none;
+  }
+}
+
 .imgPost {
-  max-width: 220px;
+  max-width: 100%;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 10px 5px 5px #a3a2a2;
 }
 </style>

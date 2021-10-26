@@ -1,5 +1,5 @@
 <template>
-  <div class="homepage justify-content-center container col-10">
+  <div class="homepage justify-content-center container col-md-10 col-12">
     <PostCreate> </PostCreate>
     <PostDisplay v-for="post in posts" :key="post.id" :post="post" :user="user">
     </PostDisplay>

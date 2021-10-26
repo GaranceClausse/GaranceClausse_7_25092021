@@ -5,7 +5,7 @@
         <h1 class="card_title">Quoi de neuf {{ user.nom }} ? Partagez avec vos collègues!</h1>
 
         <form class="" enctype="multipart/form-data">
-          <div class="col-6 center mx-auto my-2">
+          <div class="col-md-9 center mx-auto my-2">
             <input
               v-model="title"
               type="text"
@@ -17,7 +17,7 @@
             />
           </div>
 
-          <div class="col-6 center mx-auto my-2">
+          <div class="col-md-9 center mx-auto my-2">
             <input
               v-model="content"
               type="text"
@@ -29,7 +29,7 @@
             />
           </div>
 
-          <div class="mx-auto my-2" v-if="image.length == 0">
+          <div class="mx-auto my-2 d-flex justify-content-center" v-if="image.length == 0">
             <input
               type="file"
               name="file"

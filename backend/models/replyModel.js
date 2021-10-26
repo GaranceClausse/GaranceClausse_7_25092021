@@ -20,6 +20,11 @@ const Reply = sequelize.define('Reply', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    nom: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
 });
 
 // `sequelize.define` also returns the model

@@ -6,6 +6,7 @@ exports.createReplyCtrl = (req, res, next) => {
   console.log(req.body.comment + "ok");
   const reply = Reply.build({ // creation du nouvel objet reply grace au model pré-établie
     comment: req.body.comment,  // recuperation du commentaire
+    nom: req.body.nom,
     UserId: req.body.UserId,
     PostId: req.body.PostId
   });
