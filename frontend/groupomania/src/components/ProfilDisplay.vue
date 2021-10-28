@@ -3,9 +3,9 @@
     <div class="card">
       <h1 class="card__title">Espace perso</h1>
       <div class="card presentation">
-      <p>Bienvenue {{ user.nom }}!!</p>
-      <p>Te voilà sur ton espace personnel du réseau social groupomania. </p>
-      <p> N'hésite pas à aller voir les dernières publications de tes collègues! </p>
+        <p>Bienvenue {{ user.nom }}!!</p>
+        <p>Te voilà sur ton espace personnel du réseau social groupomania.</p>
+        <p>N'hésite pas à aller voir les dernières publications de tes collègues!</p>
       </div>
       <div class="form">
         <div class="user">
@@ -125,7 +125,6 @@ export default {
     }),
   },
   mounted() {
-      
     console.log(this.$store.state.user);
     if (this.$store.state.user.userId === 0) {
       this.$store
@@ -144,6 +143,7 @@ export default {
     logout() {
       this.$store.commit("logout");
       this.$router.push("/login");
+      window.location.reload();
     },
     setRead() {
       this.mode = "read";
@@ -229,7 +229,6 @@ export default {
   align-items: center;
   text-align: center;
 
-
   &__title {
     padding-bottom: 45px;
   }
@@ -249,7 +248,7 @@ export default {
   }
 }
 
-.presentation{
+.presentation {
   font-size: 20px;
   background-color: #fafafa;
   margin-bottom: 0;

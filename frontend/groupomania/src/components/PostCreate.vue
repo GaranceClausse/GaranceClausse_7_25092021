@@ -2,7 +2,10 @@
   <div class="postCreate">
     <div class="jumbotron card homepage">
       <div class="createPost">
-        <h1 class="card_title">Quoi de neuf {{ user.nom }} ? <br> Partagez avec vos collègues!</h1>
+        <h1 class="card_title">
+          Quoi de neuf {{ user.nom }} ? <br />
+          Partagez avec vos collègues!
+        </h1>
 
         <form class="" enctype="multipart/form-data">
           <div class="col-md-9 center mx-auto my-2">
@@ -29,14 +32,17 @@
             />
           </div>
 
-          <div class="mx-auto my-2 d-flex justify-content-center" v-if="image.length == 0">
+          <div
+            class="mx-auto my-2 d-flex justify-content-center"
+            v-if="image.length == 0"
+          >
             <input
               type="file"
               name="file"
               ref="file"
               accept=".png, .jpg, .jpeg, .gif"
               @change="fileSetting"
-              style="display:none;"
+              style="display: none"
               id="img"
             />
             <label for="img" class="addImg">Ajouter une photo</label>
@@ -72,13 +78,13 @@ export default {
       validated: false,
     };
   },
-  
+
   computed: {
     ...mapState({
       user: "user",
     }),
   },
-  mounted: function () {      
+  mounted: function () {
     console.log(this.$store.state.user);
     if (this.$store.state.user.userId === 0) {
       this.$store
@@ -111,7 +117,7 @@ export default {
     },
     // fonction creation post
     postCreate: function () {
-      const formData = new FormData
+      const formData = new FormData();
       formData.append("file", this.file);
       formData.append("title", this.title);
       formData.append("content", this.content);
@@ -121,6 +127,7 @@ export default {
         .dispatch("postCreate", formData)
         .then((res) => {
           console.log(res);
+          window.location.reload();
           this.$router.push("/homepage");
         })
         .catch((error) => {
@@ -155,7 +162,6 @@ export default {
   text-align: center;
 }
 
-
 .card_action {
   text-decoration: underline;
   border: none;
@@ -180,13 +186,14 @@ export default {
 }
 
 .addImg {
-
-    padding: 10px;
-    border: 1px solid #d1515a;
-    border-radius: 20px;
+  padding: 10px;
+  border: 1px solid #d1515a;
+  border-radius: 20px;
 }
 
 .imgPost {
-    max-width: 220px;
+  max-width: 90%;
+  border-radius: 10px 10px 0 0;
+  margin: 10px auto;
 }
 </style>
