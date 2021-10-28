@@ -27,7 +27,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #091F43;
   background: #ced2da;
 }
@@ -37,7 +36,6 @@ export default {
 
   a {
     font-weight: bold;
-    color: #091F43;
 
     &.router-link-exact-active {
       color: #D1515A;

@@ -32,7 +32,7 @@ export default {
 <style lang="scss" scoped>
 .footer {
     background-color: #D1515A;
-    border-top: solid 2px #091f43;
+    color: white;
     font-size: 12px;
     height: 100px;
     @media (max-width: 768px){

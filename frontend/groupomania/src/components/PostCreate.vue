@@ -1,8 +1,8 @@
 <template>
-  <div class="">
+  <div class="postCreate">
     <div class="jumbotron card homepage">
       <div class="createPost">
-        <h1 class="card_title">Quoi de neuf {{ user.nom }} ? Partagez avec vos collègues!</h1>
+        <h1 class="card_title">Quoi de neuf {{ user.nom }} ? <br> Partagez avec vos collègues!</h1>
 
         <form class="" enctype="multipart/form-data">
           <div class="col-md-9 center mx-auto my-2">
@@ -17,7 +17,7 @@
             />
           </div>
 
-          <div class="col-md-9 center mx-auto my-2">
+          <div class="col-md-9 center mx-auto mt-3">
             <input
               v-model="content"
               type="text"
@@ -36,7 +36,10 @@
               ref="file"
               accept=".png, .jpg, .jpeg, .gif"
               @change="fileSetting"
+              style="display:none;"
+              id="img"
             />
+            <label for="img" class="addImg">Ajouter une photo</label>
           </div>
 
           <img v-if="image.length > 0" :src="image" alt="" class="imgPost" />
@@ -144,13 +147,14 @@ export default {
   position: relative;
   z-index: 1;
   max-width: 650px;
-  margin: 0 auto 100px;
   padding: 25px;
   border-radius: 12px;
   background-color: #f2f2f2;
   opacity: 0.85;
+  margin: auto;
   text-align: center;
 }
+
 
 .card_action {
   text-decoration: underline;
@@ -170,10 +174,16 @@ export default {
   border-radius: 12px;
   width: 100%;
   padding: 15px;
-  margin: 10px auto;
   background: #d1515a;
   color: #fafafa;
   text-transform: uppercase;
+}
+
+.addImg {
+
+    padding: 10px;
+    border: 1px solid #d1515a;
+    border-radius: 20px;
 }
 
 .imgPost {

@@ -32,7 +32,6 @@ export default {
 .navbar {
   flex-wrap: nowrap;
   background-color: #D1515A;
-  border-bottom: solid 2px #091f43;
 
   &-collapse{
     justify-content: end;
@@ -40,15 +39,22 @@ export default {
 
   &-nav {
     align-items: flex-end;
+    color: white;
+  }
+
+  &-light {
+    color: white;
   }
 }
 
-
+.nav-link.active {
+  color: white;
+}
 
 .nav-link {
   font-size: 15px;
   font-weight: bold;
-  color: #091f43;
+  color: white;
 
   &:hover {
     color: #d1515a;

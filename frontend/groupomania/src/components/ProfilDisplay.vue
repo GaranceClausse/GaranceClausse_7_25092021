@@ -227,6 +227,7 @@ export default {
   background-color: #f2f2f2;
   opacity: 0.85;
   align-items: center;
+  text-align: center;
 
 
   &__title {

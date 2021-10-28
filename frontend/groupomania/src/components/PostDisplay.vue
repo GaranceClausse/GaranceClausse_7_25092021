@@ -5,15 +5,15 @@
           <i class="fas fa-trash-alt deleteIcon"></i>
         </span>
       <div class="postUser col-8 py-3">
-        <span class="postUserName"> Post de <span class="font-weight-bold">{{ userExt.nomExt }}</span> </span>
+        <span class="postUserName"> Post de <span class="userName font-weight-bold">{{ userExt.nomExt }}</span> </span><br>
         <span class="postUserDate"> créé le {{ post.createdAt.split("T")[0] }} à {{ post.createdAt.split("T")[1].split(".")[0] }}</span>
         
       </div>
-      <h2 class="postTitle">{{ post.title }}</h2>
-
+      
       <div class="postCard">
-        <div class="postContent py-3">
-          <span>{{ post.content }} </span>
+          <h2 class="postTitle">{{ post.title }}</h2>
+        <div class="postContent pb-3">
+          <span class="postContentText">{{ post.content }} </span>
         </div>
 
         <div class="postPic">
@@ -166,7 +166,7 @@ export default {
   position: relative;
   z-index: 1;
   max-width: 650px;
-  margin: 0 auto 100px;
+  margin: 0 auto 30px;
   padding: 25px;
   border-radius: 12px;
   background-color: #f2f2f2;
@@ -180,9 +180,9 @@ button:disabled {
 }
 
 .deleteIcon {
-    color: #4b4949;
+    color: #d1515a;
     padding: 10px;
-    border: 1px solid #4b4949;
+    border: 1px solid #d1515a;
     border-radius: 20%;
     position: absolute;
     top: 18px; right: 40px;
@@ -193,16 +193,26 @@ button:disabled {
 
 .postUser {
     position: absolute;
-    top: 10px;
+    top: 13px;
     left: 5px;
     color:#4b4949;
+    font-size: 15px;
+}
+
+.postUserDate {
+    font-size: 10px;
+    margin-top: 0;
 }
 
 .postTitle {
-    padding-top: 50px;
-    @media all and (max-width: 472px) {
-    padding-top: 80px;
-    }
+    font-size: 22px;
+    padding-top: 75px;
+    text-align: left;
+    font-weight: 700;
+}
+
+.userName {
+    color: #d1515a;
 }
 
 .postCard {
@@ -215,9 +225,13 @@ button:disabled {
   }
 }
 
+.postContentText {
+    text-align: right;
+}
+
 .postLike {
   width: 33.3333333333333333333333333333%;
-  color: #4b4949;
+  color: #d1515a;
   border: 1px solid #b1acac;
 
   &__left {
@@ -237,6 +251,5 @@ button:disabled {
 .imgPost {
   max-width: 100%;
   border-radius: 10px 10px 0 0;
-  box-shadow: 10px 5px 5px #a3a2a2;
 }
 </style>

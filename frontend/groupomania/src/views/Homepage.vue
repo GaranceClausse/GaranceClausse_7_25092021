@@ -1,6 +1,8 @@
 <template>
   <div class="homepage justify-content-center container col-md-10 col-12">
     <PostCreate> </PostCreate>
+    
+    <h1 class="title">Les derniers post en date :</h1>
     <PostDisplay v-for="post in posts" :key="post.id" :post="post" :user="user">
     </PostDisplay>
   </div>
@@ -54,4 +56,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.title {
+    position: relative;
+    z-index: 1;
+    max-width: 650px;
+    padding: 25px 25px 25px 0;
+    margin: auto;
+    font-size: 17px;
+}
+</style>

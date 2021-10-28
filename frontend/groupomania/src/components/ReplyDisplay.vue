@@ -5,7 +5,7 @@
         <div class="replyCard__info">
           <div class="replyCard__user">
             <span class="replyCard__date">
-              Ecrit par <span class="font-weight-bold">{{ reply.nom }}</span> le
+              Ecrit par <span class="font-weight-bold replyCard__name">{{ reply.nom }}</span><br> le
               {{ reply.createdAt.split("T")[0] }} à {{ reply.createdAt.split("T")[1].split(".")[0] }}
             </span>
           </div>
@@ -153,17 +153,23 @@ export default {
   &__user {
     position: absolute;
     top: 10px;
-    left: 5px;
+    left: 15px;
     color:#4b4949;
+    font-size: 12px;
     @media all and (max-width: 472px) {
       top: 30px;
     }
   }
   &__text {
-      padding-top: 1rem;
+      padding-top: 1.5rem;
+      text-align: left;
     @media all and (max-width: 472px) {
       padding-top: 55px;
     }
+    
+    &__name {
+        color: #d1515a;
+    }  
   }
 }
 
@@ -171,19 +177,19 @@ export default {
   position: relative;
   z-index: 1;
   margin: 0 auto 100px;
-  padding: 25px;
+  padding: 25px 25px 15px 15px;
   border-radius: 12px;
-  align-items: center;
 }
 
 .deleteIcon {
   font-size: 12px;
+  color: #d1515a;
   padding: 5px;
-  border: 1px solid #4b4949;
+  border: 1px solid #d1515a;
   border-radius: 20%;
   position: absolute;
   top: 10px;
-  right: 5px;
+  right: 10px;
   @media all and (max-width: 472px) {
     top: 0;
     right: 0;
