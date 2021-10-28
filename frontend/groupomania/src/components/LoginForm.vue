@@ -42,7 +42,8 @@
           Adresse mail et/ou mot de passe invalide
         </div>
         <div class="form_row" v-if="mode == 'create' && status == 'error_create'">
-          Adresse mail et/ou mot de passe invalide
+          <p class="wrongInfo">Adresse mail et/ou mot de passe invalide</p>
+          <p class="wrongMdp"><i class="fas fa-exclamation-triangle"></i>   Le mot de passe doit faire 8 caractères et contenir une majuscule, une minuscule, et une chiffre</p>
         </div>
         <div class="form_row">
           <button
@@ -202,5 +203,14 @@ export default {
 
 .card_title {
   font-size: 25px;
+}
+
+.wrongInfo {
+  margin-bottom: 5px;
+}
+.wrongMdp {
+  font-size: 10px;
+  
+  margin-bottom: 5px;
 }
 </style>
