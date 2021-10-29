@@ -193,6 +193,9 @@ export default {
   border-radius: 12px;
   background-color: #f2f2f2;
   opacity: 0.85;
+  
+  align-items: center;
+  text-align: center;
 }
 
 .card_action {

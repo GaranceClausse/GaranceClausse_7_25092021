@@ -1,12 +1,15 @@
 <template>
-  <div class="reply d-flex row justify-content-center">
+  <div class="reply d-flex row mx-0 justify-content-center">
     <div class="replyList">
       <div class="replyCard card my-3" v-for="reply in replies" :key="reply.id">
         <div class="replyCard__info">
           <div class="replyCard__user">
             <span class="replyCard__date">
-              Ecrit par <span class="font-weight-bold replyCard__name">{{ reply.nom }}</span><br> le
-              {{ reply.createdAt.split("T")[0] }} à {{ reply.createdAt.split("T")[1].split(".")[0] }}
+              Ecrit par
+              <span class="font-weight-bold replyCard__name">{{ reply.nom }}</span
+              ><br />
+              le {{ reply.createdAt.split("T")[0] }} à
+              {{ reply.createdAt.split("T")[1].split(".")[0] }}
             </span>
           </div>
           <span
@@ -114,32 +117,30 @@ export default {
 
 <style lang="scss" scoped>
 .reply {
-  width: 380px;
-
-  @media all and (max-width: 472px) {
-    max-width: 300px;
-  }
-  @media all and (max-width: 380px) {
-    max-width: 210px;
-  }
+  width: 100%;
 
   &__post {
     width: 100%;
   }
 
   &__input {
-    width: 90%;
+    width: 75%;
     border-right: none;
     border-radius: 10px 0 0 10px;
   }
   &__add {
+    width: 5%;
     border-radius: 0 10px 10px 0;
     color: #4b4949;
   }
 }
 
+.replyList {
+  width: 100%;
+}
+
 .replyCard {
-  width: 350px;
+  width: 80%;
   background: #ced2da;
   border-radius: 15px;
 
@@ -154,29 +155,28 @@ export default {
     position: absolute;
     top: 10px;
     left: 15px;
-    color:#4b4949;
+    color: #4b4949;
     font-size: 12px;
     @media all and (max-width: 472px) {
       top: 30px;
     }
   }
   &__text {
-      padding-top: 1.5rem;
-      text-align: left;
+    padding-top: 1.5rem;
+    text-align: left;
     @media all and (max-width: 472px) {
       padding-top: 55px;
     }
-    
+
     &__name {
-        color: #d1515a;
-    }  
+      color: #d1515a;
+    }
   }
 }
 
 .card {
   position: relative;
   z-index: 1;
-  margin: 0 auto 100px;
   padding: 25px 25px 15px 15px;
   border-radius: 12px;
 }

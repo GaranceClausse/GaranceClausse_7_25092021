@@ -8,7 +8,7 @@
         </h1>
 
         <form class="" enctype="multipart/form-data">
-          <div class="col-md-9 center mx-auto my-2">
+          <div class="col-md-9 px-0 center mx-auto my-2">
             <input
               v-model="title"
               type="text"
@@ -20,7 +20,7 @@
             />
           </div>
 
-          <div class="col-md-9 center mx-auto mt-3">
+          <div class="col-md-9 px-0 col-12 center mx-auto mt-3">
             <input
               v-model="content"
               type="text"
@@ -57,7 +57,8 @@
             @click.prevent="postCreate()"
           >
             Poster
-          </button>
+          </button>          
+
         </form>
       </div>
     </div>
@@ -137,8 +138,7 @@ export default {
     // validation formulaire
     formValid: function () {
       if (
-        (this.title.length > 0 && this.content.length > 0) ||
-        (this.title.length > 0 && this.image.length > 0)
+        (this.title.length > 0 && this.content.length > 0 && this.image.length > 0) 
       ) {
         this.validated = true;
         return;
@@ -192,7 +192,7 @@ export default {
 }
 
 .imgPost {
-  max-width: 90%;
+  max-width: 100%;
   border-radius: 10px 10px 0 0;
   margin: 10px auto;
 }

@@ -167,7 +167,7 @@ export default {
   z-index: 1;
   max-width: 650px;
   margin: 0 auto 30px;
-  padding: 25px;
+  padding: 15px;
   border-radius: 12px;
   background-color: #f2f2f2;
   opacity: 0.85;
@@ -216,13 +216,7 @@ button:disabled {
 }
 
 .postCard {
-  max-width: 380px;
-  @media all and (max-width: 472px) {
-    max-width: 300px;
-  }
-  @media all and (max-width: 380px) {
-    max-width: 210px;
-  }
+  width: 100%;
 }
 
 .postContentText {
@@ -249,7 +243,7 @@ button:disabled {
 }
 
 .imgPost {
-  max-width: 100%;
+  width: 100%;
   border-radius: 10px 10px 0 0;
 }
 </style>
