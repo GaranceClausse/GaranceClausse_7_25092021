@@ -5,7 +5,7 @@
       <div class="card presentation">
         <p>Bienvenue {{ user.nom }}!!</p>
         <p>Te voilà sur ton espace personnel du réseau social groupomania.</p>
-        <p>N'hésite pas à aller voir les dernières publications de tes collègues!</p>
+        <router-link class="homepageLink" to="/homepage">N'hésite pas à aller voir les dernières publications de tes collègues!</router-link>
       </div>
       <div class="form">
         <div class="user">
@@ -154,6 +154,12 @@ export default {
     setDelete() {
       this.mode = "delete";
     },
+    setHomepage() {
+      
+      this.$store.commit("logout");
+      this.router.push("/homepage");      
+      window.location.reload();
+    },
     userModify: function () {
       if (confirm("Etes vous sûr de vouloir modifier votre mot de passe ?")) {
         this.$store
@@ -252,5 +258,10 @@ export default {
   font-size: 20px;
   background-color: #fafafa;
   margin-bottom: 0;
+}
+
+.homepageLink {
+  color: #091F43;
+  text-decoration: none;
 }
 </style>
