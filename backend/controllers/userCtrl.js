@@ -15,7 +15,7 @@ exports.signupCtrl = (req, res, next) => {
           nom: req.body.nom,
           email: req.body.email,
           password: hash,
-          isAdmin: req.body.isAdmin,
+          isAdmin: req.body.isAdmin
         });
         user.save() // sauvegarde les informations utilisateur
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
@@ -94,7 +94,7 @@ exports.modifyUserCtrl = (req, res, next) => {
   const userObj = req.file?
   {
     ...JSON.parse(req.body.user),
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    
 
 } : { ...req.body };
 User.update({
