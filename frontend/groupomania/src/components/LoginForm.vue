@@ -127,7 +127,24 @@ export default {
         .catch((error) => console.error(error));
     },
     createAccount() {
-      this.$store
+      if (this.email == "administrateur@groupomania.fr")
+      {
+        this.$store
+        .dispatch("createAccount", {
+          nom: this.username,
+          email: this.email,
+          password: this.password,
+          isAdmin: true,
+        })
+        .then((res) => {
+          console.log(res);
+          this.userLogin(); // si ok, lance la fonction login
+        })
+        .catch((error) => console.error(error));
+      }
+      else 
+      {
+        this.$store
         .dispatch("createAccount", {
           nom: this.username,
           email: this.email,
@@ -138,6 +155,7 @@ export default {
           this.userLogin(); // si ok, lance la fonction login
         })
         .catch((error) => console.error(error));
+        }
     },
     
   },

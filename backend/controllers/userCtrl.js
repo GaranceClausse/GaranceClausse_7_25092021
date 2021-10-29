@@ -14,7 +14,8 @@ exports.signupCtrl = (req, res, next) => {
         const user = User.build({
           nom: req.body.nom,
           email: req.body.email,
-          password: hash
+          password: hash,
+          isAdmin: req.body.isAdmin,
         });
         user.save() // sauvegarde les informations utilisateur
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
@@ -93,6 +94,7 @@ exports.modifyUserCtrl = (req, res, next) => {
   const userObj = req.file?
   {
     ...JSON.parse(req.body.user),
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
 
 } : { ...req.body };
 User.update({
@@ -105,7 +107,6 @@ User.update({
 .then(() => res.status(200).json({ message: 'user modifié !'}))
 .catch(error => res.status(400).json({ error }));
 };
-
 
 // controlleur pour suppression profil
 exports.deleteUserCtrl = (req, res, next) => {
