@@ -9,3 +9,5 @@ Pour lancer l'application :
 -npm install  
 -node server.js dans le backend  
 -npm run serve dans le frontend  
+
+Vous pouvez accéder au profil administrateur avec l'adresse mail : administrateur@groupomania.fr
