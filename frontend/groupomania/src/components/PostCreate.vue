@@ -9,10 +9,15 @@
 
         <form class="" enctype="multipart/form-data">
           <div class="col-md-9 px-0 center mx-auto my-2">
+            <label for="title" class="label">
+              Titre
+              
+            </label>
             <input
               v-model="title"
               type="text"
               name="title"
+              id="title"
               placeholder="Titre..."
               class="form_row_input col-12 py-1"
               aria-required="true"
@@ -21,10 +26,15 @@
           </div>
 
           <div class="col-md-9 px-0 col-12 center mx-auto mt-3">
+            <label for="content" class="label">
+              Contenu
+              
+            </label>
             <input
               v-model="content"
               type="text"
               name="content"
+              id="content"
               placeholder="Quoi de neuf?"
               class="form_row_input col-12 py-3"
               aria-required="true"
@@ -180,14 +190,14 @@ export default {
   border-radius: 12px;
   width: 100%;
   padding: 15px;
-  background: #d1515a;
+  background: #D31D2A;
   color: #fafafa;
   text-transform: uppercase;
 }
 
 .addImg {
   padding: 10px;
-  border: 1px solid #d1515a;
+  border: 1px solid #D31D2A;
   border-radius: 20px;
 }
 
@@ -195,5 +205,9 @@ export default {
   max-width: 100%;
   border-radius: 10px 10px 0 0;
   margin: 10px auto;
+}
+
+.label {
+  visibility: hidden;
 }
 </style>

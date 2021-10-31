@@ -187,7 +187,7 @@ export default {
   width: 100%;
   padding: 15px;
   margin: 10px auto;
-  background: #d1515a;
+  background: #AD1D2A;
   color: #fafafa;
   text-transform: uppercase;
 

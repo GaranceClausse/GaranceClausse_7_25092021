@@ -169,7 +169,7 @@ export default {
     }
 
     &__name {
-      color: #d1515a;
+      color: #D31D2A;
     }
   }
 }
@@ -183,9 +183,9 @@ export default {
 
 .deleteIcon {
   font-size: 12px;
-  color: #d1515a;
+  color: #D31D2A;
   padding: 5px;
-  border: 1px solid #d1515a;
+  border: 1px solid #D31D2A;
   border-radius: 20%;
   position: absolute;
   top: 10px;

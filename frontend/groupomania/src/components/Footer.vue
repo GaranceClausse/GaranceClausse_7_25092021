@@ -3,7 +3,7 @@
         <div class="container text-left">
             <div class="row ">
                 <div class="col-xs-12 col-md-5">
-                    <h5 class="footer__title pl-3">A propos</h5>
+                    <p class="footer__title pl-3">A propos</p>
                     <ul class="footer__item">
                         <li class="footer__list">Fonctionnement du site</li>
                         <li class="footer__list">Conditions générales</li>
@@ -11,7 +11,7 @@
                     </ul>
                 </div>
                 <div class="col-xs-12 col-md-5">
-                    <h5 class="footer__title pl-3">Assistance</h5>
+                    <p class="footer__title pl-3">Assistance</p>
                     <ul class="footer__item">
                         <li class="footer__list">Centre d'aide</li>
                         <li class="footer__list">Nous contacter</li>
@@ -31,7 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-    background-color: #D1515A;
+    background-color: #D31D2A;
     color: white;
     font-size: 12px;
     height: 100px;

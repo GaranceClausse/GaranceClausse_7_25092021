@@ -45,6 +45,7 @@
             @click="toggleReply"
           >
             <i class="fas fa-comment-alt"></i>
+            Commentaires
           </button>
         </div>
       </div>
@@ -180,9 +181,9 @@ button:disabled {
 }
 
 .deleteIcon {
-    color: #d1515a;
+    color: #AD1D2A;
     padding: 10px;
-    border: 1px solid #d1515a;
+    border: 1px solid #AD1D2A;
     border-radius: 20%;
     position: absolute;
     top: 18px; right: 40px;
@@ -212,7 +213,7 @@ button:disabled {
 }
 
 .userName {
-    color: #d1515a;
+    color: #AD1D2A;
 }
 
 .postCard {
@@ -225,7 +226,7 @@ button:disabled {
 
 .postLike {
   width: 33.3333333333333333333333333333%;
-  color: #d1515a;
+  color: #AD1D2A;
   border: 1px solid #b1acac;
 
   &__left {

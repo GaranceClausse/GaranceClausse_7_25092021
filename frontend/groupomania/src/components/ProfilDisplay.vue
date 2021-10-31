@@ -54,7 +54,7 @@
           </div>
         </div>
         <div class="card__option">
-          <h4 v-if="mode === 'read'">Gérer mon compte :</h4>
+          <h2 v-if="mode === 'read'" class="card_action_title">Gérer mon compte :</h2>
           <button
             v-if="mode === 'read'"
             role="button"
@@ -80,7 +80,7 @@
           <button
             v-if="mode === 'read'"
             @click="logout()"
-            class="btn btn__lg btn__danger"
+            class="btn"
           >
             Déconnexion
           </button>
@@ -88,14 +88,14 @@
             v-if="mode === 'modify'"
             @click="userModify()"
             type="submit"
-            class="btn btn__lg btn__success"
+            class="btn"
             :disabled="!validatedFields"
           >
             Enregistrer
           </button>
           <button
             v-if="mode === 'delete'"
-            class="btn btn__lg btn__danger"
+            class="btn"
             @click="userDelete()"
           >
             <i class="fas fa-trash-alt"></i>
@@ -209,7 +209,7 @@ export default {
   width: 100%;
   padding: 15px;
   margin: 10px auto;
-  background: #d1515a;
+  background: #AD1D2A;
   color: #fafafa;
   text-transform: uppercase;
 }
@@ -248,8 +248,11 @@ export default {
   &_action {
     text-decoration: underline;
     border: none;
+    &_title {
+      font-size: 25px;
+    }
     &:hover {
-      color: #d1515a;
+      color: #D31D2A;
     }
   }
 }

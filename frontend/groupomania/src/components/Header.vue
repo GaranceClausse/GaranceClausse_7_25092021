@@ -31,7 +31,7 @@ export default {
 
 .navbar {
   flex-wrap: nowrap;
-  background-color: #D1515A;
+  background-color: #D31D2A;
 
   &-collapse{
     justify-content: end;
@@ -57,7 +57,7 @@ export default {
   color: white;
 
   &:hover {
-    color: #d1515a;
+    color: #D31D2A;
   }
 
 }
