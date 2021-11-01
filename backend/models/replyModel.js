@@ -28,7 +28,6 @@ const Reply = sequelize.define('Reply', {
 });
 
 // `sequelize.define` also returns the model
-console.log(Reply === sequelize.models.Reply); // true
 
 //creation des foreign keys
 User.hasOne(Reply, {

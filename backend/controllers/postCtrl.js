@@ -98,7 +98,6 @@ exports.likePostCtrl = (req, res, next) => {
 
       } else {
         if (post.userLiked.includes(userId)) {
-          console.log(post.userLiked)
           newLikes = post.likes - 1;
           post.update({
             likes: newLikes,

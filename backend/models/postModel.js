@@ -45,7 +45,6 @@ const Post = sequelize.define('Post', {
 });
 
 // `sequelize.define` also returns the model
-console.log(Post === sequelize.models.Post); // true
 
 // creation foreign key
 User.hasOne(Post, {

@@ -2,8 +2,6 @@ const Reply = require('../models/replyModel');
 
 //controlleur pour la creation d'un nouveau commentaire
 exports.createReplyCtrl = (req, res, next) => {
-  
-  console.log(req.body.comment + "ok");
   const reply = Reply.build({ // creation du nouvel objet reply grace au model pré-établie
     comment: req.body.comment,  // recuperation du commentaire
     nom: req.body.nom,

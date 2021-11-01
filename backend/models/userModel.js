@@ -36,8 +36,6 @@ const User = sequelize.define('User', {
     }
 });
 
-// `sequelize.define` also returns the model
-console.log(User === sequelize.models.User); // true
 
 // crée la table si elle n'existe pas 
 User.sync();

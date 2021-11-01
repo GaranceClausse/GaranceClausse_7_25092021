@@ -129,7 +129,7 @@ export default {
     border-radius: 10px 0 0 10px;
   }
   &__add {
-    width: 5%;
+    width: 10%;
     border-radius: 0 10px 10px 0;
     color: #4b4949;
   }

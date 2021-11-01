@@ -130,7 +130,6 @@ const store = createStore({
             })
         },
         postCreate: ({ commit }, postInfos) => {
-            console.log(postInfos);
             return new Promise((resolve, reject) => {
                 commit;
                 instance.post('/post', postInfos)

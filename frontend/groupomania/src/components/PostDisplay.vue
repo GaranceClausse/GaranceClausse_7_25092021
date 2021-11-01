@@ -45,7 +45,7 @@
             @click="toggleReply"
           >
             <i class="fas fa-comment-alt"></i>
-            Commentaires
+            .
           </button>
         </div>
       </div>
@@ -89,7 +89,6 @@ export default {
     },
     // bouton pour delete article
     postDelete: function () {
-      console.log(this.post.id);
       if (confirm("voulez-vous vraiment supprimer cette publication ?")) {
         this.$store
           .dispatch("postDelete", this.post.id)

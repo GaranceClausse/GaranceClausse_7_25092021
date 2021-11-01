@@ -96,7 +96,6 @@ export default {
     }),
   },
   mounted: function () {
-    console.log(this.$store.state.user);
     if (this.$store.state.user.userId === 0) {
       this.$store
         .dispatch("getUserData", { id: 0 })
@@ -133,7 +132,6 @@ export default {
       formData.append("title", this.title);
       formData.append("content", this.content);
       formData.append("UserId", this.user.userId);
-      console.log(this.user.userId);
       this.$store
         .dispatch("postCreate", formData)
         .then((res) => {
